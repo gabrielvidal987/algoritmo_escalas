@@ -1,0 +1,265 @@
+[
+    {
+        "name": "Pamela Souza",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Mondek",
+        "music_message": true,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            5,
+            6
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Gabriel Vidal",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Davi Batista",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Vitor Ribeiro",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Marcos chaves",
+        "music_message": true,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Mariana nascimento",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Eric",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            6
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Michele",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Matheus nascimento",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Pedro braz",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Istanley",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Rodrigo",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            5
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Sarah",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Samara",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Geni",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Alan",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "José",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Flavinha",
+        "music_message": true,
+        "except_day": [
+            2,
+            6
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Pamela",
+        "music_message": true,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Bia aventureiros",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Bia Felix",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Elza",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Ivni",
+        "music_message": false,
+        "except_day": [
+            2,
+            6
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Jussara",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Lucas",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Mateus araujo",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Aureni",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    }
+]

@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo da barra superior */
+.topper {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;  /* Garante que a barra fique por cima do conteúdo */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding-top: 60px; /* Diminui o espaço no topo para a barra */
+    display: block;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;  /* Distância entre as caixas */
+    width: 80%;
+    margin: 0 auto;
+}
+
+.box {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.msg {
+    background-color: #fff;
+    padding: 20px;
+    width: 30%; /* Ajusta a largura da msg */
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px auto; /* Centraliza a div e coloca uma margem para separar do conteúdo */
+}
+
+p {
+    margin-bottom: 10px;  /* Distância entre os parágrafos */
+}
