@@ -11,7 +11,7 @@ import calendar
 import json
 import pandas as pd
 import random
-import os, sys, subprocess
+import os, subprocess, sys, re
 from log import log
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
@@ -32,8 +32,11 @@ util_days = []
 schedule = []
 final_msg = ''
 
-year_choice = input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')
-month_choice = input('Digite o numero do mês desejado (caso deixe em branco será usado o mês vigente): \n')
+year_choice = int(re.sub(r'\D', '', input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')) or datetime.now().year)
+month_choice = int(re.sub(r'\D', '', input('Digite o numero do mês desejado (caso deixe em branco será usado o mês vigente): \n')) or datetime.now().month)
+qtd_quarta = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Quarta-Feira (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
+qtd_sabado = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Sábado (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
+qtd_domingo = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Domingo (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
 
 # Função de validação para garantir que os dados estejam corretos
 def validate_data(row):
@@ -41,12 +44,12 @@ def validate_data(row):
 
     # Verifica se os dias informados são válidos
     if type(row['Dias que não pode ir']) != float and row['Dias que não pode ir'] != 'nan':
-        for day in row['Dias que não pode ir'].split(','):
+        for day in row['Dias que não pode ir'].replace(' ','').split(','):
             if str(day).lower().replace('á','a') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'dias que não pode ir' ")
                 
-    if type(row['Dias preferenciais']) != float and row['Dias que não pode ir'] != 'nan':
-        for day in row['Dias preferenciais'].split(','):
+    if type(row['Dias preferenciais']) != float and row['Dias preferenciais'] != 'nan':
+        for day in row['Dias preferenciais'].replace(' ','').split(','):
             if str(day).lower().replace('á','a') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'Dias preferenciais' ")
 
@@ -55,8 +58,9 @@ def validate_data(row):
         errors.append(f"linha {row} contém genero inválido ")
 
     # Validação da atividade
-    if row['Atuando'].lower() != 'sim' and row['Atuando'].lower().replace('ã','') != 'nao':
-        errors.append(f"linha {row} contém um valor inválido para a coluna 'ativo' ")
+    if type(row['Atuando']) != float:
+        if row['Atuando'].lower() != 'sim' and row['Atuando'].lower().replace('ã','') != 'nao':
+            errors.append(f"linha {row} contém um valor inválido para a coluna 'ativo' ")
 
     return errors
 
@@ -77,19 +81,25 @@ def create_people_list() -> None:
             
             row = {
                 "name" : row['Nome'], #nome da pessoa
-                "music_message" : True if str(row['Mensagem Musical']).lower() == 'sim' else False, #booleana se ela faz mensagem musical
-                "except_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias que não pode ir'].split(',')] if type(row['Dias que não pode ir']) != float else [], #dias em que ela não consegue ficar
-                "preference_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias preferenciais'].split(',')] if type(row['Dias preferenciais']) != float else [], #dias em que ela prefere ficar
-                "gender" : row['Genero'].lower(),
-                "active" : True if row['Atuando'].lower() == 'sim' else False #se a pessoa está ativa ou não
+                "instrumentalist" : True if str(row['Instrumentista']).lower() == 'sim' else False, #Booleana que diz se a pessoa é instrumentista
+                "vocalist" : True if str(row['Vocalista']).lower() == 'sim' else False, #Booleana que diz se a pessoa é vocalista
+                "music_message" : True if str(row['Faz mensagem musical']).lower() == 'sim' else False, #booleana se ela faz mensagem musical
+                "except_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias que não pode ir'].replace(' ','').split(',')] if type(row['Dias que não pode ir']) != float else [], #dias em que ela não consegue ficar
+                "preference_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias preferenciais'].replace(' ','').split(',')] if type(row['Dias preferenciais']) != float else [], #dias em que ela prefere ficar
+                "gender" : row['Genero'].lower(), #genero da pessoa f = feminino e m = masculino
+                "active" : True if str(row['Atuando']).lower() == 'sim' else False #se a pessoa está ativa ou não
             }
+            
             list_dict_person.append(row)
         
-        #cria o arquivo json da lista de pessoas
-        with open('people.json','w',encoding='utf-8') as  f:
-            json.dump(list_dict_person, f, ensure_ascii=False, indent=4)
-        
-        return True
+        if not list_dict_person:
+            print('Lista de dicionarios das pessoas ficou vazio!')
+            return False
+        else:
+            #cria o arquivo json da lista de pessoas
+            with open('people.json','w',encoding='utf-8') as  f:
+                json.dump(list_dict_person, f, ensure_ascii=False, indent=4)
+            return True
     
     except Exception as er:
         log('debug','create_people_list()',f'Erro: {er}')
@@ -115,17 +125,33 @@ def create_list_days() -> None:
             weekday = datetime(year=ano,month=mes,day=day).weekday()
             if weekday == 2 or weekday == 5 or weekday == 6:
                 #adiciona uma tupla (numero do dia , numero weekday daquele dia)
-                util_days.append({
+                dict_day = {
                     "month_day" : day,
                     "weekday" : weekday,
-                    "people_need" : 4 if weekday == 5 else 2 #se for sábado precisa de 4 pessoas, em outro caso só precisa de 2
-                })
+                }
+                match weekday:
+                    case 2:
+                        if qtd_quarta < 1: continue
+                        dict_day["people_need"] = qtd_quarta
+                    case 5:
+                        if qtd_sabado < 1: continue
+                        dict_day["people_need"] = qtd_sabado
+                    case 6:
+                        if qtd_domingo < 1: continue
+                        dict_day["people_need"] = qtd_domingo
+                    case _:
+                        print(f'Dia não encontrado weekday: {weekday}')
+                        
+                util_days.append(dict_day)
 
-        #cria o arquivo json da lista de dias
-        with open('days.json','w',encoding='utf-8') as  f:
-            json.dump(util_days, f, ensure_ascii=False, indent=4)
-        
-        return True
+        if not util_days:
+            print('Lista de dias uteis disponiveis ficou vazio!')
+            return False
+        else:
+            #cria o arquivo json da lista de dias
+            with open('days.json','w',encoding='utf-8') as  f:
+                json.dump(util_days, f, ensure_ascii=False, indent=4)
+            return True
     
     except Exception as er:
         log('debug','create_list_days()',f'Erro: {er}')
@@ -142,8 +168,8 @@ def create_table():
         used_people = set()  # Para rastrear pessoas já escaladas
         
         # Separando homens e mulheres
-        men = [p for p in list_dict_person if p['gender'] == 'm' and p['active']]
-        women = [p for p in list_dict_person if p['gender'] == 'f' and p['active']]
+        men = [p for p in list_dict_person if p['gender'] == 'm' and p['active'] and p['vocalist']]
+        women = [p for p in list_dict_person if p['gender'] == 'f' and p['active'] and p['vocalist']]
         
         #iterea sobre os dias uteis
         for day in util_days:
@@ -164,11 +190,11 @@ def create_table():
             while len(day_people) < required_people:
                 if len(day_people) % 2 == 0:  # Se a posição for par, colocar homem
                     if preferred_men:
-                        person = preferred_men.pop(0)
+                        person = preferred_men.pop(random.randint(0,len(preferred_men) - 1))
                         day_people.append(person['name'])
                         used_people.add(person['name'])
                     elif available_men:
-                        person = available_men.pop(0)
+                        person = available_men.pop(random.randint(0,len(available_men) - 1))
                         day_people.append(person['name'])
                         used_people.add(person['name'])
                     else:
@@ -178,11 +204,11 @@ def create_table():
                         used_people.add(person['name'])
                 else:  # Se a posição for ímpar, colocar mulher
                     if preferred_women:
-                        person = preferred_women.pop(0)
+                        person = preferred_women.pop(random.randint(0,len(preferred_women) - 1))
                         day_people.append(person['name'])
                         used_people.add(person['name'])
                     elif available_women:
-                        person = available_women.pop(0)
+                        person = available_women.pop(random.randint(0,len(available_women) - 1))
                         day_people.append(person['name'])
                         used_people.add(person['name'])
                     else:
@@ -199,11 +225,15 @@ def create_table():
                 "people" : day_people
             })
         
-        #cria o arquivo json do resultado final
-        with open('final_date.json','w',encoding='utf-8') as  f:
-            json.dump(schedule, f, ensure_ascii=False, indent=4)
-            
-        return True
+        
+        if not schedule:
+            print('Lista de dicionarios dos dias da escala ficaram vazios!')
+            return False
+        else:
+            #cria o arquivo json do resultado final
+            with open('final_date.json','w',encoding='utf-8') as  f:
+                json.dump(schedule, f, ensure_ascii=False, indent=4)
+            return True
     
     except Exception as er:
         log('debug','create_table()',f'Erro: {er}')
@@ -279,15 +309,15 @@ def create_html():
     subprocess.run(["start", arquivo_html], shell=True)
 
 if __name__ == '__main__':
-    if create_people_list():
-        if create_list_days():
-            if create_table():
+    if create_people_list() and list_dict_person:
+        if create_list_days() and util_days:
+            if create_table() and schedule:
                 create_message()
                 create_html()
                 print('Tabela com escala criada com sucesso!')
             else:
-                print('Erro. Checar log')
+                print('Erro create_table(). Checar log')
         else:
-            print('Erro. Checar log')
+            print('Erro no create_list_days(). Checar log')
     else:
-        print('Erro. Checar log')
+        print('Erro no create_people_list(). Checar log')
