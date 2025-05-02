@@ -7,7 +7,7 @@
             "Mondek",
             "Pamela Souza",
             "Rodrigo",
-            "Flavinha"
+            "Bia Felix"
         ]
     },
     {
@@ -16,7 +16,7 @@
         "required_people": 2,
         "people": [
             "Eric",
-            "Aureni"
+            "Geni"
         ]
     },
     {
@@ -24,8 +24,8 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Vitor Ribeiro",
-            "Bia Felix"
+            "Matheus nascimento",
+            "Aureni"
         ]
     },
     {
@@ -33,10 +33,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Davi Batista",
-            "Michele",
-            "Alan",
-            "Geni"
+            "Mateus araujo",
+            "Mariana nascimento",
+            "Vitor Ribeiro",
+            "Elza"
         ]
     },
     {
@@ -44,8 +44,8 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "Matheus nascimento",
-            "Mariana nascimento"
+            "Alan",
+            "Sarah"
         ]
     },
     {
@@ -53,8 +53,8 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Gabriel Vidal",
-            "Sarah"
+            "José",
+            "Mariana nascimento"
         ]
     },
     {
@@ -62,10 +62,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Mateus araujo",
-            "Pamela",
+            "Gabriel Vidal",
+            "Michele",
             "Pedro braz",
-            "Elza"
+            "Pamela"
         ]
     },
     {
@@ -73,8 +73,8 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "José",
-            "Pamela Souza"
+            "Davi Batista",
+            "Michele"
         ]
     },
     {
@@ -82,8 +82,8 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "José",
-            "Aureni"
+            "Davi Batista",
+            "Pamela"
         ]
     },
     {
@@ -91,10 +91,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Alan",
-            "Pamela",
             "Mondek",
-            "Bia Felix"
+            "Flavinha",
+            "Pedro braz",
+            "Aureni"
         ]
     },
     {
@@ -102,7 +102,7 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "José",
+            "Gabriel Vidal",
             "Geni"
         ]
     },
@@ -112,7 +112,7 @@
         "required_people": 2,
         "people": [
             "Vitor Ribeiro",
-            "Flavinha"
+            "Pamela Souza"
         ]
     },
     {
@@ -120,10 +120,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Vitor Ribeiro",
-            "Aureni",
+            "Rodrigo",
+            "Bia Felix",
             "Pedro braz",
-            "Sarah"
+            "Aureni"
         ]
     }
 ]

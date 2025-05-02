@@ -26,10 +26,28 @@ int_day = {
     5: 'sabado',
     6: 'domingo'
 }
+months = {
+    1: "Janeiro",
+    2: "Fevereiro",
+    3: "Março",
+    4: "Abril",
+    5: "Maio",
+    6: "Junho",
+    7: "Julho",
+    8: "Agosto",
+    9: "Setembro",
+    10: "Outubro",
+    11: "Novembro",
+    12: "Dezembro"
+}
 
 list_dict_person = []
 util_days = []
 schedule = []
+funcoes = {
+    "instrumentistas" : [],
+    "mensagem musical" : []
+}
 final_msg = ''
 
 year_choice = int(re.sub(r'\D', '', input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')) or datetime.now().year)
@@ -38,20 +56,32 @@ qtd_quarta = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessária
 qtd_sabado = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Sábado (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
 qtd_domingo = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Domingo (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
 
-# Função de validação para garantir que os dados estejam corretos
 def validate_data(row):
+    '''Função de validação para garantir que os dados estejam corretos'''
+    
     errors = []
 
-    # Verifica se os dias informados são válidos
+    # Validação se os dias informados são validos para o "dias que não pode ir" 
     if type(row['Dias que não pode ir']) != float and row['Dias que não pode ir'] != 'nan':
         for day in row['Dias que não pode ir'].replace(' ','').split(','):
             if str(day).lower().replace('á','a') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'dias que não pode ir' ")
-                
+               
+    # Validação se os dias informados são validos para o "dias preferenciais" 
     if type(row['Dias preferenciais']) != float and row['Dias preferenciais'] != 'nan':
         for day in row['Dias preferenciais'].replace(' ','').split(','):
             if str(day).lower().replace('á','a') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'Dias preferenciais' ")
+
+    # Validação do campo instrumentista
+    if type(row['Instrumentista']) != float:
+        if row['Instrumentista'].lower() != 'sim' and row['Instrumentista'].lower().replace('ã','') != 'nao':
+            errors.append(f"linha {row} contém um valor inválido para a coluna 'Instrumentista' ")
+            
+    # Validação do campo vocalista
+    if type(row['Vocalista']) != float:
+        if row['Vocalista'].lower() != 'sim' and row['Vocalista'].lower().replace('ã','') != 'nao':
+            errors.append(f"linha {row} contém um valor inválido para a coluna 'Vocalista' ")
 
     # Validação do gênero
     if row['Genero'].lower() != 'm' and row['Genero'].lower() != 'f':
@@ -64,10 +94,11 @@ def validate_data(row):
 
     return errors
 
-#Lê um arquivo Excel (pessoas.xlsx) contendo informações sobre as pessoas.
-#Converte essas informações para um formato de dicionário (com nome, preferências, restrições de dias, gênero, etc.).
-#Gera um arquivo JSON (people.json) com a lista de pessoas formatada.
 def create_people_list() -> None:
+    '''Lê um arquivo Excel (pessoas.xlsx) contendo informações sobre as pessoas.
+    Converte essas informações para um formato de dicionário (com nome, preferências, restrições de dias, gênero, etc.).
+    Gera um arquivo JSON (people.json) com a lista de pessoas formatada.'''
+    
     try:
         planilha_people = 'pessoas.xlsx'
         df = pd.read_excel(planilha_people)
@@ -82,7 +113,9 @@ def create_people_list() -> None:
             row = {
                 "name" : row['Nome'], #nome da pessoa
                 "instrumentalist" : True if str(row['Instrumentista']).lower() == 'sim' else False, #Booleana que diz se a pessoa é instrumentista
+                "type_instrumental" : str(row['Instrumento']) if type(row['Instrumento']) != float else '', #tipo de instrumento tocado
                 "vocalist" : True if str(row['Vocalista']).lower() == 'sim' else False, #Booleana que diz se a pessoa é vocalista
+                "type_vocal" : str(row['Tipo Vocal']) if type(row['Tipo Vocal']) != float else '', #tipo de voz
                 "music_message" : True if str(row['Faz mensagem musical']).lower() == 'sim' else False, #booleana se ela faz mensagem musical
                 "except_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias que não pode ir'].replace(' ','').split(',')] if type(row['Dias que não pode ir']) != float else [], #dias em que ela não consegue ficar
                 "preference_day" : [day_int[day.lower().replace('á','a')] for day in row['Dias preferenciais'].replace(' ','').split(',')] if type(row['Dias preferenciais']) != float else [], #dias em que ela prefere ficar
@@ -105,10 +138,20 @@ def create_people_list() -> None:
         log('debug','create_people_list()',f'Erro: {er}')
         return False
 
-#Gera a lista de dias úteis do mês atual (somente segunda, terça, sábado e domingo).
-#Para cada dia da semana, define o número de pessoas necessárias (4 pessoas para sábado e 2 para os outros dias).
-#Salva essa lista de dias em um arquivo JSON (days.json).
+def create_people_func_list() -> None:
+    '''Lista as pessoas que possuem funções diferentes de cantar'''
+    for p in list_dict_person:
+        if p['active'] and p['instrumentalist'] or p['music_message']:
+            if p['instrumentalist']:
+                funcoes['instrumentistas'].append(p)
+            if p['music_message']:
+                funcoes['mensagem musical'].append(p)
+    
 def create_list_days() -> None:
+    '''Gera a lista de dias úteis do mês atual (somente segunda, terça, sábado e domingo).
+    Para cada dia da semana, define o número de pessoas necessárias (4 pessoas para sábado e 2 para os outros dias).
+    Salva essa lista de dias em um arquivo JSON (days.json).'''
+    
     try:
         hoje = datetime.now()
         try:
@@ -157,13 +200,14 @@ def create_list_days() -> None:
         log('debug','create_list_days()',f'Erro: {er}')
         return False
 
-# Monta a escala de acordo com as regras:
-# Alternância de Gêneros: Coloca homens e mulheres alternadamente na escala.
-# Preferências: Prioriza as pessoas que têm preferências para o dia.
-# Restrições: Verifica se a pessoa está disponível para o dia (não tem restrição).
-# Escala Completa: Preenche o número necessário de pessoas por dia, respeitando as regras de gênero, preferências e restrições.
-# Gera o arquivo JSON (final_date.json) com a tabela final de escalas.
 def create_table():
+    '''Monta a escala de acordo com as regras:
+    Alternância de Gêneros: Coloca homens e mulheres alternadamente na escala.
+    Preferências: Prioriza as pessoas que têm preferências para o dia.
+    Restrições: Verifica se a pessoa está disponível para o dia (não tem restrição).
+    Escala Completa: Preenche o número necessário de pessoas por dia, respeitando as regras de gênero, preferências e restrições.
+    Gera o arquivo JSON (final_date.json) com a tabela final de escalas.'''
+    
     try:
         used_people = set()  # Para rastrear pessoas já escaladas
         
@@ -239,8 +283,9 @@ def create_table():
         log('debug','create_table()',f'Erro: {er}')
         return False
    
-#cria o arquivo txt no formato de mensagem
 def create_message():
+    '''cria o arquivo txt no formato de mensagem'''
+ 
     global final_msg
     '''    
     Odd/mm - sabado
@@ -254,28 +299,15 @@ def create_message():
     for sched in schedule:
         final_msg += f'🔵 {sched["month_day"]}/{mes} - {sched["weekday"]}\n'
         for person in sched["people"]:
-            final_msg += person + ' , ' if person != sched["people"][-1] else person
+            final_msg += f'{person} , ' if person != sched["people"][-1] else person
         final_msg += '\nInstrumentista: Sonoplastia'
         final_msg += '\n\n'
         if sched["weekday"] == 'sabado':
             final_msg += '\n\n'
    
-#cria o html com jinja2
 def create_html():
-    months = {
-        1: "Janeiro",
-        2: "Fevereiro",
-        3: "Março",
-        4: "Abril",
-        5: "Maio",
-        6: "Junho",
-        7: "Julho",
-        8: "Agosto",
-        9: "Setembro",
-        10: "Outubro",
-        11: "Novembro",
-        12: "Dezembro"
-    }
+    '''cria o html com jinja2'''
+
     # Configura o caminho para os templates (diretório 'templates')
     env = Environment(loader=FileSystemLoader('templates'))
 
@@ -294,6 +326,7 @@ def create_html():
         'ano': ano,
         'idade': 25,
         'dias_uteis': schedule,
+        'funcoes' : funcoes,
         'msg': final_msg.replace('\n','</br>')
     }
 
@@ -310,6 +343,7 @@ def create_html():
 
 if __name__ == '__main__':
     if create_people_list() and list_dict_person:
+        create_people_func_list()
         if create_list_days() and util_days:
             if create_table() and schedule:
                 create_message()
