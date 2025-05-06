@@ -297,10 +297,11 @@ def create_message():
     hoje = datetime.now()
     mes = hoje.month if month_choice == '' else int(month_choice)
     for sched in schedule:
-        final_msg += f'🔵 {sched["month_day"]}/{mes} - {sched["weekday"]}\n'
+        final_msg += f'🔵 {sched["month_day"]}/{mes} - {str(sched["weekday"]).upper()}\n'
         for person in sched["people"]:
             final_msg += f'{person} , ' if person != sched["people"][-1] else person
-        final_msg += '\nInstrumentista: Sonoplastia'
+        final_msg += '\nInstrumentista(s): Sonoplastia'
+        final_msg += '\nSonoplasta(s): Gabriel e Pâmela'
         final_msg += '\n\n'
         if sched["weekday"] == 'sabado':
             final_msg += '\n\n'

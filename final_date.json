@@ -4,10 +4,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Mondek",
-            "Pamela Souza",
             "Rodrigo",
-            "Bia Felix"
+            "Pamela Souza",
+            "Mondek",
+            "Sarah"
         ]
     },
     {
@@ -16,7 +16,7 @@
         "required_people": 2,
         "people": [
             "Eric",
-            "Geni"
+            "Elza"
         ]
     },
     {
@@ -25,7 +25,7 @@
         "required_people": 2,
         "people": [
             "Matheus nascimento",
-            "Aureni"
+            "Bia Felix"
         ]
     },
     {
@@ -33,10 +33,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Mateus araujo",
-            "Mariana nascimento",
-            "Vitor Ribeiro",
-            "Elza"
+            "Alan",
+            "Geni",
+            "Pedro braz",
+            "Michele"
         ]
     },
     {
@@ -44,8 +44,8 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "Alan",
-            "Sarah"
+            "Mateus araujo",
+            "Aureni"
         ]
     },
     {
@@ -53,7 +53,7 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "José",
+            "Vitor Ribeiro",
             "Mariana nascimento"
         ]
     },
@@ -63,8 +63,8 @@
         "required_people": 4,
         "people": [
             "Gabriel Vidal",
-            "Michele",
-            "Pedro braz",
+            "Flavinha",
+            "Davi Batista",
             "Pamela"
         ]
     },
@@ -73,8 +73,8 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "Davi Batista",
-            "Michele"
+            "José",
+            "Flavinha"
         ]
     },
     {
@@ -82,8 +82,8 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Davi Batista",
-            "Pamela"
+            "Gabriel Vidal",
+            "Bia Felix"
         ]
     },
     {
@@ -92,9 +92,9 @@
         "required_people": 4,
         "people": [
             "Mondek",
-            "Flavinha",
-            "Pedro braz",
-            "Aureni"
+            "Mariana nascimento",
+            "Davi Batista",
+            "Pamela Souza"
         ]
     },
     {
@@ -102,8 +102,8 @@
         "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "Gabriel Vidal",
-            "Geni"
+            "Pedro braz",
+            "Bia Felix"
         ]
     },
     {
@@ -111,8 +111,8 @@
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Vitor Ribeiro",
-            "Pamela Souza"
+            "José",
+            "Elza"
         ]
     },
     {
@@ -120,10 +120,10 @@
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Rodrigo",
+            "Alan",
             "Bia Felix",
-            "Pedro braz",
-            "Aureni"
+            "Eric",
+            "Sarah"
         ]
     }
 ]
