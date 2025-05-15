@@ -1,129 +1,127 @@
 [
     {
-        "month_day": 3,
-        "weekday": "sabado",
-        "required_people": 4,
+        "month_day": 1,
+        "weekday": "domingo",
+        "required_people": 2,
         "people": [
-            "Rodrigo",
-            "Pamela Souza",
             "Mondek",
-            "Sarah"
+            "Michele"
         ]
     },
     {
         "month_day": 4,
-        "weekday": "domingo",
+        "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Eric",
+            "Alan",
             "Elza"
         ]
     },
     {
         "month_day": 7,
-        "weekday": "quarta",
-        "required_people": 2,
-        "people": [
-            "Matheus nascimento",
-            "Bia Felix"
-        ]
-    },
-    {
-        "month_day": 10,
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Alan",
-            "Geni",
-            "Pedro braz",
-            "Michele"
+            "Rodrigo",
+            "Pamela Souza",
+            "Matheus nascimento",
+            "Geni"
+        ]
+    },
+    {
+        "month_day": 8,
+        "weekday": "domingo",
+        "required_people": 2,
+        "people": [
+            "Gabriel Vidal",
+            "Sarah"
         ]
     },
     {
         "month_day": 11,
-        "weekday": "domingo",
-        "required_people": 2,
-        "people": [
-            "Mateus araujo",
-            "Aureni"
-        ]
-    },
-    {
-        "month_day": 14,
         "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Vitor Ribeiro",
+            "Davi Batista",
             "Mariana nascimento"
         ]
     },
     {
-        "month_day": 17,
+        "month_day": 14,
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Gabriel Vidal",
-            "Flavinha",
-            "Davi Batista",
-            "Pamela"
-        ]
-    },
-    {
-        "month_day": 18,
-        "weekday": "domingo",
-        "required_people": 2,
-        "people": [
-            "José",
+            "Pedro braz",
+            "Pamela",
+            "Vitor Ribeiro",
             "Flavinha"
         ]
     },
     {
-        "month_day": 21,
-        "weekday": "quarta",
+        "month_day": 15,
+        "weekday": "domingo",
         "required_people": 2,
         "people": [
-            "Gabriel Vidal",
+            "Mateus araujo",
             "Bia Felix"
         ]
     },
     {
-        "month_day": 24,
+        "month_day": 18,
+        "weekday": "quarta",
+        "required_people": 2,
+        "people": [
+            "Vitor Ribeiro",
+            "Aureni"
+        ]
+    },
+    {
+        "month_day": 21,
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Mondek",
-            "Mariana nascimento",
+            "Alan",
+            "Aureni",
+            "Matheus nascimento",
+            "Geni"
+        ]
+    },
+    {
+        "month_day": 22,
+        "weekday": "domingo",
+        "required_people": 2,
+        "people": [
             "Davi Batista",
             "Pamela Souza"
         ]
     },
     {
         "month_day": 25,
-        "weekday": "domingo",
+        "weekday": "quarta",
         "required_people": 2,
         "people": [
-            "Pedro braz",
-            "Bia Felix"
+            "Vitor Ribeiro",
+            "Pamela Souza"
         ]
     },
     {
         "month_day": 28,
-        "weekday": "quarta",
-        "required_people": 2,
-        "people": [
-            "José",
-            "Elza"
-        ]
-    },
-    {
-        "month_day": 31,
         "weekday": "sabado",
         "required_people": 4,
         "people": [
-            "Alan",
-            "Bia Felix",
-            "Eric",
-            "Sarah"
+            "Mondek",
+            "Pamela",
+            "Gabriel Vidal",
+            "Geni"
+        ]
+    },
+    {
+        "month_day": 29,
+        "weekday": "domingo",
+        "required_people": 2,
+        "people": [
+            "Davi Batista",
+            "Geni"
         ]
     }
 ]

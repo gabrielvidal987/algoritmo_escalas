@@ -106,7 +106,7 @@
             6
         ],
         "gender": "m",
-        "active": true
+        "active": false
     },
     {
         "name": "Michele",
@@ -158,7 +158,7 @@
             5
         ],
         "gender": "m",
-        "active": true
+        "active": false
     },
     {
         "name": "Rodrigo",
@@ -200,7 +200,7 @@
             5
         ],
         "gender": "f",
-        "active": true
+        "active": false
     },
     {
         "name": "Geni",
@@ -238,7 +238,7 @@
         "except_day": [],
         "preference_day": [],
         "gender": "m",
-        "active": true
+        "active": false
     },
     {
         "name": "Flavinha",
