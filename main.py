@@ -407,8 +407,12 @@ async def gerar_escala(request: Request):
         env = Environment(loader=FileSystemLoader('templates'))
 
         # Carrega o template 'index.html' que estará na pasta templates
-        template = env.get_template('index.html')
-
+        nonlocal dados, schedule, funcoes, final_msg
+        if dados["table"] == "default":
+            template = env.get_template('index.html')
+        else:
+            template = env.get_template('index_music.html')
+            
         hoje = datetime.now()
         ano = hoje.year if year_event == '' else int(year_event)
         mes = hoje.month if month_event == '' else int(month_event)

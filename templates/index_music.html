@@ -82,6 +82,25 @@
             </div>
         {% endfor %}
     </div>
+    <div class="container">
+        {% for tipo in funcoes %}
+        <div class="box">
+            <p>{{tipo}}</p>
+            {% for dict_pessoa in funcoes[tipo] %}
+            <p>----------------------------------</p>
+            <p>Nome: {{ dict_pessoa.get('name') }} </p>
+            {% if dict_pessoa.get('type_instrumental',None) %}
+                <p>Tipo de instrumento: {{ dict_pessoa.get('type_instrumental')}} </p>
+            {% else %}
+                <p>Tipo de voz: {{ dict_pessoa.get('type_vocal')}} </p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="msg">
+        {{ msg }}
+    </div>
     </br>
 </body>
 </html>
