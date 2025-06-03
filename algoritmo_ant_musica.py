@@ -17,12 +17,20 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
 day_int = {
+    'segunda': 0,
+    'terca': 1,
     'quarta': 2,
+    'quinta': 3,
+    'sexta': 4,
     'sabado': 5,
     'domingo': 6
 }
 int_day = {
+    0: 'segunda',
+    1: 'terca',
     2: 'quarta',
+    3: 'quinta',
+    4: 'sexta',
     5: 'sabado',
     6: 'domingo'
 }
@@ -42,16 +50,17 @@ months = {
 }
 
 list_dict_person = []
-util_days = []
+days_event = []
 schedule = []
 funcoes = {
     "instrumentistas" : [],
-    "mensagem musical" : []
+    "mensagem_musical" : []
 }
 final_msg = ''
+separar_genero = False
 
-year_choice = int(re.sub(r'\D', '', input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')) or datetime.now().year)
-month_choice = int(re.sub(r'\D', '', input('Digite o numero do mês desejado (caso deixe em branco será usado o mês vigente): \n')) or datetime.now().month)
+year_event = int(re.sub(r'\D', '', input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')) or datetime.now().year)
+month_event = int(re.sub(r'\D', '', input('Digite o numero do mês desejado (caso deixe em branco será usado o mês vigente): \n')) or datetime.now().month)
 qtd_quarta = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Quarta-Feira (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
 qtd_sabado = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Sábado (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
 qtd_domingo = int(re.sub(r'\D', '', input('Digite o numero de pessoas necessárias para Domingo (caso deixe em branco não serão escaladas pessoas para esse dia): \n')) or 0)
@@ -145,7 +154,7 @@ def create_people_func_list() -> None:
             if p['instrumentalist']:
                 funcoes['instrumentistas'].append(p)
             if p['music_message']:
-                funcoes['mensagem musical'].append(p)
+                funcoes['mensagem_musical'].append(p)
     
 def create_list_days() -> None:
     '''Gera a lista de dias úteis do mês atual (somente segunda, terça, sábado e domingo).
@@ -155,8 +164,8 @@ def create_list_days() -> None:
     try:
         hoje = datetime.now()
         try:
-            ano = hoje.year if year_choice == '' else int(year_choice)
-            mes = hoje.month if month_choice == '' else int(month_choice)
+            ano = hoje.year if year_event == '' else int(year_event)
+            mes = hoje.month if month_event == '' else int(month_event)
             # Obter os dias do mês atual (retorna uma tupla (dia da semana que o mes começa , numero de dias))
             month_days = calendar.monthrange(ano, mes)[1]
         except Exception as er:
@@ -169,6 +178,8 @@ def create_list_days() -> None:
             if weekday == 2 or weekday == 5 or weekday == 6:
                 #adiciona uma tupla (numero do dia , numero weekday daquele dia)
                 dict_day = {
+                    "year" : year_event,
+                    "month" : month_event,
                     "month_day" : day,
                     "weekday" : weekday,
                 }
@@ -185,127 +196,161 @@ def create_list_days() -> None:
                     case _:
                         print(f'Dia não encontrado weekday: {weekday}')
                         
-                util_days.append(dict_day)
+                days_event.append(dict_day)
 
-        if not util_days:
+        if not days_event:
             print('Lista de dias uteis disponiveis ficou vazio!')
             return False
         else:
             #cria o arquivo json da lista de dias
             with open('days.json','w',encoding='utf-8') as  f:
-                json.dump(util_days, f, ensure_ascii=False, indent=4)
+                json.dump(days_event, f, ensure_ascii=False, indent=4)
             return True
     
     except Exception as er:
         log('debug','create_list_days()',f'Erro: {er}')
         return False
 
-def create_table():
-    '''Monta a escala de acordo com as regras:
+def create_table_music():
+    global final_msg, schedule
+    '''
+    Monta a escala de acordo com as regras:
     Alternância de Gêneros: Coloca homens e mulheres alternadamente na escala.
     Preferências: Prioriza as pessoas que têm preferências para o dia.
     Restrições: Verifica se a pessoa está disponível para o dia (não tem restrição).
     Escala Completa: Preenche o número necessário de pessoas por dia, respeitando as regras de gênero, preferências e restrições.
-    Gera o arquivo JSON (final_date.json) com a tabela final de escalas.'''
+    Gera o arquivo JSON (final_date.json) com a tabela final de escalas.
+    '''
+
+    def create_message():
+        '''cria o arquivo txt no formato de mensagem'''
+    
+        global final_msg
+        '''    
+        Odd/mm - sabado
+        nome, nome, nome,
+        instrumentista: nome 
+        '''
+        
+        #cria a string da mensagem
+        hoje = datetime.now()
+        mes = hoje.month if month_event == '' else int(month_event)
+        for sched in schedule:
+            final_msg += f'🔵 {sched["month_day"]}/{mes} - {str(sched["weekday"]).upper()}\n'
+            for person in sched["people"]:
+                final_msg += f'{person} , ' if person != sched["people"][-1] else person
+            final_msg += '\nInstrumentista(s): Sonoplastia'
+            final_msg += '\nSonoplasta(s): Gabriel e Pâmela'
+            final_msg += '\n\n'
+            if sched["weekday"] == 'sabado':
+                final_msg += '\n\n'
     
     try:
         used_people = set()  # Para rastrear pessoas já escaladas
         
-        # Separando homens e mulheres
-        men = [p for p in list_dict_person if p['gender'] == 'm' and p['active'] and p['vocalist']]
-        women = [p for p in list_dict_person if p['gender'] == 'f' and p['active'] and p['vocalist']]
-        
-        #iterea sobre os dias uteis
-        for day in util_days:
-            day_people = []
-            required_people = day['people_need']
-            month_day = day['month_day']
-            weekday = day['weekday']
+        if separar_genero:
+            # Separando homens e mulheres
+            men = [p for p in list_dict_person if p['gender'] == 'm' and p['vocalist']]
+            women = [p for p in list_dict_person if p['gender'] == 'f' and p['vocalist']]
             
-            # Priorizar pessoas com preferências para o dia
-            preferred_men = [p for p in men if weekday in p['preference_day'] and p['name'] not in used_people]
-            preferred_women = [p for p in women if weekday in p['preference_day'] and p['name'] not in used_people]
+            #iterea sobre os dias uteis
+            for day in days_event:
+                day_people = []
+                people_need = day['people_need']
+                month_day = day['month_day']
+                weekday = day['weekday']
+                
+                # Priorizar pessoas com preferências para o dia
+                preferred_men = [p for p in men if weekday in p['preference_day'] and p['name'] not in used_people]
+                preferred_women = [p for p in women if weekday in p['preference_day'] and p['name'] not in used_people]
+                
+                # Filtra as pessoas que podem ser escaladas para esse dia
+                available_men = [p for p in men if weekday not in p['except_day'] and p['name'] not in used_people and p not in preferred_men]
+                available_women = [p for p in women if weekday not in p['except_day'] and p['name'] not in used_people and p not in preferred_women]
+                
+                # Alternar entre homem e mulher
+                while len(day_people) < people_need:
+                    if len(day_people) % 2 == 0:  # Se a posição for par, colocar homem
+                        if preferred_men:
+                            person = preferred_men.pop(random.randint(0,len(preferred_men) - 1))
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                        elif available_men:
+                            person = available_men.pop(random.randint(0,len(available_men) - 1))
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                        else:
+                            person = random.choice(men)
+                            if weekday in person['except_day'] : continue
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                    else:  # Se a posição for ímpar, colocar mulher
+                        if preferred_women:
+                            person = preferred_women.pop(random.randint(0,len(preferred_women) - 1))
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                        elif available_women:
+                            person = available_women.pop(random.randint(0,len(available_women) - 1))
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                        else:
+                            person = random.choice(women)
+                            if person['except_day'] == weekday: continue
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                            
+                # Atribuindo as pessoas ao dia
+                schedule.append({
+                    "month_day" : month_day,
+                    "weekday" : int_day[weekday],
+                    "people_need" : people_need,
+                    "people" : day_people
+                })
             
-            # Filtra as pessoas que podem ser escaladas para esse dia
-            available_men = [p for p in men if weekday not in p['except_day'] and p['name'] not in used_people and p not in preferred_men]
-            available_women = [p for p in women if weekday not in p['except_day'] and p['name'] not in used_people and p not in preferred_women]
-            
-            # Alternar entre homem e mulher
-            while len(day_people) < required_people:
-                if len(day_people) % 2 == 0:  # Se a posição for par, colocar homem
-                    if preferred_men:
-                        person = preferred_men.pop(random.randint(0,len(preferred_men) - 1))
-                        day_people.append(person['name'])
-                        used_people.add(person['name'])
-                    elif available_men:
-                        person = available_men.pop(random.randint(0,len(available_men) - 1))
+        else:
+            #iterea sobre os dias uteis
+            for day in days_event:
+                day_people = []
+                people_need = day['people_need']
+                month_day = day['month_day']
+                weekday = day['weekday']
+                
+                # Filtra as pessoas que podem ser escaladas para esse dia
+                available_person = [p for p in list_dict_person if p['name'] not in used_people]
+                
+                # Alternar entre homem e mulher
+                while len(day_people) < people_need:
+                    if available_person:
+                        person = available_person.pop(random.randint(0,len(available_person) - 1))
                         day_people.append(person['name'])
                         used_people.add(person['name'])
                     else:
-                        person = random.choice(men)
-                        if weekday in person['except_day'] : continue
+                        person = random.choice(available_person)
                         day_people.append(person['name'])
                         used_people.add(person['name'])
-                else:  # Se a posição for ímpar, colocar mulher
-                    if preferred_women:
-                        person = preferred_women.pop(random.randint(0,len(preferred_women) - 1))
-                        day_people.append(person['name'])
-                        used_people.add(person['name'])
-                    elif available_women:
-                        person = available_women.pop(random.randint(0,len(available_women) - 1))
-                        day_people.append(person['name'])
-                        used_people.add(person['name'])
-                    else:
-                        person = random.choice(women)
-                        if person['except_day'] == weekday: continue
-                        day_people.append(person['name'])
-                        used_people.add(person['name'])
-                        
-            # Atribuindo as pessoas ao dia
-            schedule.append({
-                "month_day" : month_day,
-                "weekday" : int_day[weekday],
-                "required_people" : required_people,
-                "people" : day_people
-            })
-        
+                            
+                # Atribuindo as pessoas ao dia
+                schedule.append({
+                    "year" : day["year"],
+                    'month' : day["month"],
+                    "month_day" : month_day,
+                    "weekday" : int_day[weekday],
+                    "people_need" : people_need,
+                    "people" : day_people
+                })
         
         if not schedule:
             print('Lista de dicionarios dos dias da escala ficaram vazios!')
             return False
         else:
-            #cria o arquivo json do resultado final
-            with open('final_date.json','w',encoding='utf-8') as  f:
-                json.dump(schedule, f, ensure_ascii=False, indent=4)
+            create_message()
             return True
     
     except Exception as er:
-        log('debug','create_table()',f'Erro: {er}')
+        #log('debug','create_table()',f'Erro: {er}')
+        print(f'Erro: {er}')
         return False
-   
-def create_message():
-    '''cria o arquivo txt no formato de mensagem'''
- 
-    global final_msg
-    '''    
-    Odd/mm - sabado
-    nome, nome, nome,
-    instrumentista: nome 
-    '''
-    
-    #cria a string da mensagem
-    hoje = datetime.now()
-    mes = hoje.month if month_choice == '' else int(month_choice)
-    for sched in schedule:
-        final_msg += f'🔵 {sched["month_day"]}/{mes} - {str(sched["weekday"]).upper()}\n'
-        for person in sched["people"]:
-            final_msg += f'{person} , ' if person != sched["people"][-1] else person
-        final_msg += '\nInstrumentista(s): Sonoplastia'
-        final_msg += '\nSonoplasta(s): Gabriel e Pâmela'
-        final_msg += '\n\n'
-        if sched["weekday"] == 'sabado':
-            final_msg += '\n\n'
-   
+
 def create_html():
     '''cria o html com jinja2'''
 
@@ -316,8 +361,8 @@ def create_html():
     template = env.get_template('index.html')
 
     hoje = datetime.now()
-    ano = hoje.year if year_choice == '' else int(year_choice)
-    mes = hoje.month if month_choice == '' else int(month_choice)
+    ano = hoje.year if year_event == '' else int(year_event)
+    mes = hoje.month if month_event == '' else int(month_event)
 
     # Dados que você deseja passar para o template
     dados = {
@@ -334,21 +379,14 @@ def create_html():
     # Renderiza o template com os dados passados e exibe o HTML
     html_renderizado = template.render(dados)
 
-    #escreve o html em um arquivo
-    with open('exemplo.html', 'w', encoding='utf-8') as f:
-        f.write(html_renderizado)
-        
-    diretorio_script = os.path.dirname(os.path.abspath(__file__))
-    arquivo_html = os.path.join(diretorio_script,'exemplo.html')
-    subprocess.run(["start", arquivo_html], shell=True)
-
+    return html_renderizado
+    
 if __name__ == '__main__':
     if create_people_list() and list_dict_person:
         create_people_func_list()
-        if create_list_days() and util_days:
-            if create_table() and schedule:
-                create_message()
-                create_html()
+        if create_list_days() and days_event:
+            if create_table_music() and schedule:
+                html = create_html()
                 print('Tabela com escala criada com sucesso!')
             else:
                 print('Erro create_table(). Checar log')
