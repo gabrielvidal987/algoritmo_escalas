@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Faixa de Som com DVD Girando</title>
+  <link href="https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://i.giphy.com/3ov9k1173PdfJWRsoE.webp') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;     /* empilha verticalmente */
+      gap: 50px;                  /* espaçamento entre as divs */
+      align-items: center;        /* centraliza horizontalmente dentro do container */
+      margin-top: 300px;
+    }
+
+    .track-container {
+      display: flex;
+      align-items: center;
+      background-color: #222;
+      border-radius: 10px;
+      padding: 20px;
+      width: 100%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .dvd {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 6px solid #444;
+      background: #000 url('https://images.unsplash.com/photo-1745253606009-9f01a3404db5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover;
+      animation: spin 4s linear infinite;
+      margin-right: 30px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .fade-slide-up {
+      opacity: 1;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .sound-visualizer {
+      display: flex;
+      align-items: flex-end;
+      height: 100px;
+      gap: 4px;
+      flex: 1;
+      margin-right: 30px;
+    }
+
+    .bar {
+      width: 5px;
+      background: #a73747;
+      animation: bounce 1s infinite ease-in-out;
+      animation-delay: calc(var(--i) * 0.1s);
+      border-radius: 2px;
+    }
+
+    @keyframes bounce {
+      0%, 100% { height: 10%; }
+      50% { height: 80%; }
+    }
+
+    .music-info {
+      min-width: 200px;
+    }
+
+    .music-info h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .music-info p {
+      margin: 5px 0;
+      color: #aaa;
+    }
+
+    button {
+      background: linear-gradient(145deg, #7b182a, #240409);
+      color: #f5e9e2;
+      border: 2px solid #5c0f22;
+      border-radius: 8px;
+      padding: 15px 40px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow:
+        4px 4px 8px #2f070f,
+        -4px -4px 8px #85313b;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #931c38, #6a1023);
+      box-shadow:
+        6px 6px 12px #29060d,
+        -6px -6px 12px #a73747;
+    }
+
+    button:active {
+      background: linear-gradient(145deg, #4c0b14, #7b182a);
+      box-shadow: inset 2px 2px 5px #29060d,
+                  inset -2px -2px 5px #a73747;
+    }
+
+    .imagem-retrato {
+      width: 80%;
+      height: 450px; /* formato retrato (vertical) */
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .imagem-retrato:hover {
+      transform: scale(1.03);
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .imagem-retrato img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gradiente-texto {
+      text-align: center;
+      font-family: 'Edu QLD Beginner', sans-serif;
+      font-weight: 700;
+      background: linear-gradient(90deg, rgb(163, 16, 43), rgb(214, 19, 55), rgb(163, 16, 43));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="" id="cont">
+    <h1 id="h1_inicial" class="gradiente-texto">Aumente o volume...</h1>
+    <div class="" id="img_inicial">
+      <button onclick="tocarMusica()" id="btn_inicial">Surpresa ❤</button>
+    </div>
+    <h1 id="h1_music" class="gradiente-texto"></h1>
+    <div class="div-centralizada" id="track1"></div>
+    <div class="div-centralizada" id="track2"></div>
+    <div class="div-centralizada" id="track3"></div>
+    <div class="div-centralizada" id="track4"></div>
+    <div class="div-centralizada" id="track5"></div>
+    <audio id="meuAudio" src="/app/templates/golden_hour.mp3" style="display: none;"></audio>
+    <h1 id="h1_horarios" class="gradiente-texto"></h1>
+    <div class="" id="img_inicial"></div>
+    <div class="" id="img_inicial"></div>
+    <div class="" id="img_inicial"></div>
+    <h1 id="h1_momentos" class="gradiente-texto"></h1>
+    <video src="video.mp4" autoplay muted loop></video>
+    <h1 id="h1_conclusao" class="gradiente-texto"></h1>
+  </div>
+
+
+  <script>
+    function tocarMusica() {
+      document.getElementById('cont').className = 'container'
+      document.getElementById('btn_inicial').remove()
+      document.getElementById('h1_inicial').innerHTML = `Eu fiz esse pequeno lembrete pra te lembrar de que...`
+
+      document.getElementById('img_inicial').innerHTML = `
+        <div class="imagem-retrato">
+          <img src="https://images.unsplash.com/photo-1528820404868-4a263d80ebaa?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Imagem Retrato">
+        </div>
+      `
+
+      document.getElementById('h1_music').innerHTML = `Todas as músicas, irei querer dançar e ouvir contigo`
+      document.getElementById('h1_horarios').innerHTML = `Em todos os horários, manhã, tarde ou noite, desejarei estar ao seu lado`
+      document.getElementById('h1_momentos').innerHTML = `Qualquer momento que seja, almejo que seja ao teu lado`
+      document.getElementById('h1_conclusao').innerHTML = `tudo depende de estar contigo.</br>Ao seu lado o momento,</br>a hora e a música se enchem de uma beleza infindável</br>pois é você quem embeleza a vida. </br>Seja nas coisas simples ou nas coisas grandiosas, </br>todas elas se tornam perfeitas se forem com você. </br>Mais do que me casar, desejo profundamente viver contigo </br>e te fazer feliz. E mesmo na eternidade sei </br>que nenhum dia será monótono pois </br>todos os dias ao seu lado são especiais. </br>Feliz aniversário de noivado meu amor ❤ `
+
+      document.getElementById('track1').className = 'track-container'
+      document.getElementById('track1').innerHTML = `
+        <div class="dvd"></div>
+        <div class="sound-visualizer" id="barras">
+        </div>
+
+        <div class="music-info">
+          <h2>Nome da Música</h2>
+          <p>Artista: Nome do Artista</p>
+          <p>Duração: 3:45</p>
+        </div>  
+      `
+
+      document.getElementById('track2').className = 'track-container'
+      document.getElementById('track2').innerHTML = `
+        <div class="dvd"></div>
+        <div class="sound-visualizer" id="barras">
+        </div>
+
+        <div class="music-info">
+          <h2>Nome da Música</h2>
+          <p>Artista: Nome do Artista</p>
+          <p>Duração: 3:45</p>
+        </div>  
+      `
+
+      document.getElementById('track3').className = 'track-container'
+      document.getElementById('track3').innerHTML = `
+        <div class="dvd"></div>
+        <div class="sound-visualizer" id="barras">
+        </div>
+
+        <div class="music-info">
+          <h2>Nome da Música</h2>
+          <p>Artista: Nome do Artista</p>
+          <p>Duração: 3:45</p>
+        </div>  
+      `
+
+      document.getElementById('track4').className = 'track-container'
+      document.getElementById('track4').innerHTML = `
+        <div class="dvd"></div>
+        <div class="sound-visualizer" id="barras">
+        </div>
+
+        <div class="music-info">
+          <h2>Nome da Música</h2>
+          <p>Artista: Nome do Artista</p>
+          <p>Duração: 3:45</p>
+        </div>  
+      `
+
+      document.getElementById('track5').className = 'track-container'
+      document.getElementById('track5').innerHTML = `
+        <div class="dvd"></div>
+        <div class="sound-visualizer" id="barras">
+        </div>
+
+        <div class="music-info">
+          <h2>Nome da Música</h2>
+          <p>Artista: Nome do Artista</p>
+          <p>Duração: 3:45</p>
+        </div>  
+      `
+
+      for (let i = 1; i <= 40; i++) {
+        document.getElementById('barras').innerHTML += `
+          <div class="bar" style="--i: ${i}"></div>
+        `
+      }
+      
+      const audio = document.getElementById('meuAudio');
+      audio.currentTime = 45;
+      audio.volume = 0; // volume de 0.0 (mudo) até 1.0 (volume máximo)
+      audio.play().catch(err => {
+        console.error('Falha ao reproduzir:', err);
+      });
+
+      let volumeAtual = 0;
+      const intervalo = setInterval(() => {
+        if (volumeAtual < 0.5) {
+          volumeAtual += 0.05; // aumenta gradualmente
+          audio.volume = Math.min(volumeAtual, 1);
+        } else {
+          clearInterval(intervalo); // para quando chegar no volume máximo
+        }
+      }, 300); // a cada 100ms
+
+    }
+
+
+  </script>
+
+</body>
+</html>
