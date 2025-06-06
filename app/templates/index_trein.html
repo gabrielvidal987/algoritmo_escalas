@@ -5,28 +5,38 @@
   <title>Faixa de Som com DVD Girando</title>
   <link href="https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@700&display=swap" rel="stylesheet">
   <style>
+    /* --- ALTERAÇÕES NO BODY --- */
     body {
       margin: 0;
       background-color: #111;
       font-family: Arial, sans-serif;
       color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      
+      /* As 3 linhas abaixo foram removidas para permitir a rolagem natural da página */
+      /* display: flex; */
+      /* justify-content: center; */
+      /* align-items: center; */
+      
       background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXR1ajJ1ZmJ0anFsN3c4bm94aGloeTN2Zzk4ZWl6cDBqc2QxcWlzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7aDcrsww5Ybp18hq/giphy.gif') no-repeat center center fixed;
       background-size: cover;
-      height: 100vh;
+      
+      /* Alterado de 'height' para 'min-height' para garantir que o fundo ocupe a tela inteira, mas permita que o conteúdo cresça e crie uma barra de rolagem. */
+      min-height: 100vh; 
     }
 
+    /* --- ALTERAÇÕES NO CONTAINER --- */
     .container {
       display: flex;
-      flex-direction: column;     /* empilha verticalmente */
-      gap: 50px;                  /* espaçamento entre as divs */
-      align-items: center;        /* centraliza horizontalmente dentro do container */
-      margin-top: 300px;
-      margin-bottom: 300px;
-      margin-left: 200px;
-      margin-right: 200px;
+      flex-direction: column;     
+      gap: 50px;                  
+      align-items: center;        
+
+      /* Esta é a maneira moderna e responsiva de centralizar e adicionar espaçamento */
+      max-width: 1200px; /* Define uma largura máxima para não ficar muito largo em telas grandes */
+      width: 90%; /* Garante que em telas menores não encoste nas bordas */
+      margin: 100px auto; /* A MÁGICA ACONTECE AQUI! */
+                          /* 100px de margem no topo E no final. */
+                          /* 'auto' nas laterais para centralizar horizontalmente. */
     }
 
     .track-container {
