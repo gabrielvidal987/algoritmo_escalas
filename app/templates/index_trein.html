@@ -41,7 +41,6 @@
       height: 150px;
       border-radius: 50%;
       border: 6px solid #444;
-      background: #000 url('https://images.unsplash.com/photo-1745253606009-9f01a3404db5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover;
       animation: spin 4s linear infinite;
       margin-right: 30px;
       box-shadow: 0 0 10px #000;
@@ -201,74 +200,77 @@
 
       document.getElementById('track1').className = 'track-container'
       document.getElementById('track1').innerHTML = `
-        <div class="dvd"></div>
-        <div class="sound-visualizer" id="barras">
+        <div class="dvd" style="background: #000 url('golden.jpg') center/cover;"></div>
+        <div class="sound-visualizer" id="barras1">
         </div>
 
         <div class="music-info">
-          <h2>Nome da Música</h2>
-          <p>Artista: Nome do Artista</p>
-          <p>Duração: 3:45</p>
+          <h2>Golden Hour</h2>
+          <p>Artista: Jake Lawson</p>
+          <p>Duração: 3:52</p>
         </div>  
       `
 
       document.getElementById('track2').className = 'track-container'
       document.getElementById('track2').innerHTML = `
-        <div class="dvd"></div>
-        <div class="sound-visualizer" id="barras">
+        <div class="dvd" style="background: #000 url('triba.jpg') center/cover;"></div>
+        <div class="sound-visualizer" id="barras2">
         </div>
 
         <div class="music-info">
-          <h2>Nome da Música</h2>
-          <p>Artista: Nome do Artista</p>
-          <p>Duração: 3:45</p>
+          <h2>Velha Infância</h2>
+          <p>Artista: Tribalistas</p>
+          <p>Duração: 4:11</p>
         </div>  
       `
 
       document.getElementById('track3').className = 'track-container'
       document.getElementById('track3').innerHTML = `
-        <div class="dvd"></div>
-        <div class="sound-visualizer" id="barras">
+        <div class="dvd" style="background: #000 url('topaz.jpg') center/cover;"></div>
+        <div class="sound-visualizer" id="barras3">
         </div>
 
         <div class="music-info">
-          <h2>Nome da Música</h2>
-          <p>Artista: Nome do Artista</p>
-          <p>Duração: 3:45</p>
+          <h2>Sem Garantia e Com Defeito</h2>
+          <p>Artista: Tópaz</p>
+          <p>Duração: 3:13</p>
         </div>  
       `
 
       document.getElementById('track4').className = 'track-container'
       document.getElementById('track4').innerHTML = `
-        <div class="dvd"></div>
-        <div class="sound-visualizer" id="barras">
+        <div class="dvd" style="background: #000 url('rubel.jpg') center/cover;"></div>
+        <div class="sound-visualizer" id="barras4">
         </div>
 
         <div class="music-info">
-          <h2>Nome da Música</h2>
-          <p>Artista: Nome do Artista</p>
-          <p>Duração: 3:45</p>
+          <h2>Quando Bate Aquela Saudade</h2>
+          <p>Artista: Rubel</p>
+          <p>Duração: 6:45</p>
         </div>  
       `
 
       document.getElementById('track5').className = 'track-container'
       document.getElementById('track5').innerHTML = `
-        <div class="dvd"></div>
-        <div class="sound-visualizer" id="barras">
+        <div class="dvd" style="background: #000 url('daniel.jpg') center/cover;"></div>
+        <div class="sound-visualizer" id="barras5">
         </div>
 
         <div class="music-info">
-          <h2>Nome da Música</h2>
-          <p>Artista: Nome do Artista</p>
-          <p>Duração: 3:45</p>
+          <h2>O Jeito Que Você Me Olha</h2>
+          <p>Artista: Daniel Lüdtke</p>
+          <p>Duração: 3:19</p>
         </div>  
       `
-
-      for (let i = 1; i <= 40; i++) {
-        document.getElementById('barras').innerHTML += `
-          <div class="bar" style="--i: ${i}"></div>
-        `
+      
+      for (let c = 1; c < 6; c++) {
+        for (let i = 1; i <= 40; i++) {
+          document.getElementById(`barras${c}`).innerHTML += `
+            <div class="bar" style="--i: ${i}"></div>
+          `
+        }
       }
+ 
       
       const audio = document.getElementById('meuAudio');
       audio.currentTime = 0;
