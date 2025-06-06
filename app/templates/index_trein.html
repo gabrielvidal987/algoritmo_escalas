@@ -32,11 +32,9 @@
       align-items: center;        
 
       /* Esta é a maneira moderna e responsiva de centralizar e adicionar espaçamento */
-      max-width: 1200px; /* Define uma largura máxima para não ficar muito largo em telas grandes */
-      width: 90%; /* Garante que em telas menores não encoste nas bordas */
-      margin: 100px auto; /* A MÁGICA ACONTECE AQUI! */
-                          /* 100px de margem no topo E no final. */
-                          /* 'auto' nas laterais para centralizar horizontalmente. */
+      max-width: 1100px; /* Opcional: diminua se quiser mais estreito em telas grandes */
+      width: 80%;      /* ANTES: 90%. Agora terá 10% de espaço em cada lado */
+      margin: 100px auto;
     }
 
     .track-container {
@@ -117,7 +115,7 @@
       border: 2px solid #5c0f22;
       border-radius: 8px;
       padding: 15px 40px;
-      font-size: 1.5rem;
+      font-size: 5rem;
       cursor: pointer;
       box-shadow:
         4px 4px 8px #2f070f,
@@ -172,11 +170,10 @@
   </style>
 </head>
 <body>
-  <div class="" id="cont">
-    <h1 id="h1_inicial" class="gradiente-texto">Aumente o volume...</h1>
-    <div class="" id="img_inicial">
-      <button onclick="tocarMusica()" id="btn_inicial">Surpresa ❤</button>
-    </div>
+  <div class="container" id="cont">
+    <h1 id="h1_inicial" class="gradiente-texto" style="font-size: 5rem;">Aumente o volume...</h1>
+    <button onclick="tocarMusica()" id="btn_inicial">Surpresa ❤</button>
+    <div class="" id="img_inicial"></div>
     <h1 id="h1_music" class="gradiente-texto"></h1>
     <div class="div-centralizada" id="track1"></div>
     <div class="div-centralizada" id="track2"></div>
@@ -196,9 +193,9 @@
 
   <script>
     function tocarMusica() {
-      document.getElementById('cont').className = 'container'
       document.getElementById('btn_inicial').remove()
       document.getElementById('h1_inicial').innerHTML = `Eu fiz esse pequeno lembrete pra te lembrar de que...`
+      document.getElementById('h1_inicial').style.fontSize = '1.5rem'
 
       document.getElementById('img_inicial').innerHTML = `
         <div class="imagem-retrato">
