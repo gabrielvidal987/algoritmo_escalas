@@ -13,7 +13,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: url('https://i.giphy.com/3ov9k1173PdfJWRsoE.webp') no-repeat center center fixed;
+      background: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXR1ajJ1ZmJ0anFsN3c4bm94aGloeTN2Zzk4ZWl6cDBqc2QxcWlzOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7aDcrsww5Ybp18hq/giphy.gif') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
     }
@@ -171,7 +171,7 @@
     <div class="div-centralizada" id="track3"></div>
     <div class="div-centralizada" id="track4"></div>
     <div class="div-centralizada" id="track5"></div>
-    <audio id="meuAudio" src="/app/templates/golden_hour.mp3" style="display: none;"></audio>
+    <audio id="meuAudio" src="audio_completo.mp3" style="display: none;"></audio>
     <h1 id="h1_horarios" class="gradiente-texto"></h1>
     <div class="" id="img_inicial"></div>
     <div class="" id="img_inicial"></div>
@@ -271,7 +271,7 @@
       }
       
       const audio = document.getElementById('meuAudio');
-      audio.currentTime = 45;
+      audio.currentTime = 0;
       audio.volume = 0; // volume de 0.0 (mudo) até 1.0 (volume máximo)
       audio.play().catch(err => {
         console.error('Falha ao reproduzir:', err);
