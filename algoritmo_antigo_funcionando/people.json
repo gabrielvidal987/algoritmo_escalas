@@ -1,0 +1,393 @@
+[
+    {
+        "name": "Pamela Souza",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Mondek",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": true,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            5,
+            6
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Gabriel Vidal",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": false
+    },
+    {
+        "name": "Davi Batista",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Vitor Ribeiro",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Marcos chaves",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": false,
+        "type_vocal": "Tenor",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Mariana nascimento",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Eric",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Tenor",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            6
+        ],
+        "gender": "m",
+        "active": false
+    },
+    {
+        "name": "Michele",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Matheus nascimento",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Pedro braz",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Istanley",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": false,
+        "type_vocal": "Baritono",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "m",
+        "active": false
+    },
+    {
+        "name": "Rodrigo",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [
+            5
+        ],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Sarah",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Samara",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": false,
+        "type_vocal": "Baritono",
+        "music_message": true,
+        "except_day": [],
+        "preference_day": [
+            5
+        ],
+        "gender": "f",
+        "active": false
+    },
+    {
+        "name": "Geni",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Alan",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "José",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "m",
+        "active": false
+    },
+    {
+        "name": "Flavinha",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": true,
+        "except_day": [
+            2,
+            6
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Pamela",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": true,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Bia aventureiros",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": false
+    },
+    {
+        "name": "Bia Felix",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Elza",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Ivni",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": false,
+        "type_vocal": "Baritono",
+        "music_message": false,
+        "except_day": [
+            2,
+            6
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Jussara",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Contralto",
+        "music_message": false,
+        "except_day": [],
+        "preference_day": [],
+        "gender": "f",
+        "active": false
+    },
+    {
+        "name": "Lucas",
+        "instrumentalist": true,
+        "type_instrumental": "Violão",
+        "vocalist": false,
+        "type_vocal": "Contralto",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Mateus araujo",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Contralto",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "m",
+        "active": true
+    },
+    {
+        "name": "Aureni",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Contralto",
+        "music_message": false,
+        "except_day": [
+            5
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": true
+    },
+    {
+        "name": "Edvania",
+        "instrumentalist": false,
+        "type_instrumental": "",
+        "vocalist": true,
+        "type_vocal": "Contralto",
+        "music_message": false,
+        "except_day": [
+            2
+        ],
+        "preference_day": [],
+        "gender": "f",
+        "active": false
+    }
+]
