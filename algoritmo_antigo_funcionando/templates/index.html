@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ titulo }}</title>
-    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
     <!-- Topper (barra superior) -->
@@ -16,7 +16,10 @@
         {% for dia in dias_uteis %}
             <div class="box">
                 <p>Dia: {{ dia['month_day'] }} - {{ dia['weekday'] }}</p>
-                <p>Qtd de pessoas: {{ dia['required_people'] }}</p>
+                <p>Sonoplastia: {{ " e ".join(dia['sonoplaste']) }}</p>
+                <br>
+                <p>Dirigentes:</p>
+                <p>Quantidade de pessoas: {{ dia['required_people'] }}</p>
                 {% for person in dia['people'] %}
                     <p>{{ person }}</br></p>
                 {% endfor %}

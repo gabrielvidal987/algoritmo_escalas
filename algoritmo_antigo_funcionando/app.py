@@ -17,14 +17,22 @@ from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
 day_int = {
+    'segunda': 0,
+    'terca': 1,
     'quarta': 2,
+    'quinta': 3,
+    'sexta': 4,
     'sabado': 5,
     'domingo': 6
 }
 int_day = {
-    2: 'quarta',
-    5: 'sabado',
-    6: 'domingo'
+    0: 'Segunda-feira',
+    1: 'Terça-feira',
+    2: 'Quarta-feira',
+    3: 'Quinta-feira',
+    4: 'Sexta-feira',
+    5: 'Sábado',
+    6: 'Domingo'
 }
 months = {
     1: "Janeiro",
@@ -40,15 +48,36 @@ months = {
     11: "Novembro",
     12: "Dezembro"
 }
-
-list_dict_person = []
-util_days = []
-schedule = []
+escale_names = {
+    (6, 1) : ["Marcos"], 
+    (6, 3) : ["Marcos"], 
+    (6, 2) : ["Alan"], 
+    (6, 4) : ["Alan"], 
+    (5, 1) : ["Davi"], 
+    (5, 3) : ["Davi"], 
+    (5, 2) : ["Gabriel", "Thiago"], 
+    (5, 4) : ["Gabriel", "Thiago"], 
+    (2, 1) : ["Pamela", "Iohana"], 
+    (2, 3) : ["Pam", "Iohana"], 
+    (2, 2) : ["Pedro"], 
+    (2, 4) : ["Pedro"], 
+    (2, 5) : ["Gabriel"], 
+    (5, 5) : ["Gabriel"], 
+    (6, 5) : ["Gabriel"], 
+}
 funcoes = {
     "instrumentistas" : [],
     "mensagem musical" : []
 }
+
+# Estrutura: {"dia : int" : "nome do sonoplasta"}
+escale_sonoplaste = {}
+list_dict_person = []
+util_days = []
+schedule = []
 final_msg = ''
+pasta_arquivos = 'arquivos'
+os.makedirs(pasta_arquivos, exist_ok=True)
 
 year_choice = int(re.sub(r'\D', '', input('Digite o numero do ano desejado (caso deixe em branco será usado o ano vigente): \n')) or datetime.now().year)
 month_choice = int(re.sub(r'\D', '', input('Digite o numero do mês desejado (caso deixe em branco será usado o mês vigente): \n')) or datetime.now().month)
@@ -64,13 +93,13 @@ def validate_data(row):
     # Validação se os dias informados são validos para o "dias que não pode ir" 
     if type(row['Dias que não pode ir']) != float and row['Dias que não pode ir'] != 'nan':
         for day in row['Dias que não pode ir'].replace(' ','').split(','):
-            if str(day).lower().replace('á','a') not in day_int:
+            if str(day).lower().replace('á','a').replace('ç','c') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'dias que não pode ir' ")
                
     # Validação se os dias informados são validos para o "dias preferenciais" 
     if type(row['Dias preferenciais']) != float and row['Dias preferenciais'] != 'nan':
         for day in row['Dias preferenciais'].replace(' ','').split(','):
-            if str(day).lower().replace('á','a') not in day_int:
+            if str(day).lower().replace('á','a').replace('ç','c') not in day_int:
                 errors.append(f"linha {row} contém dia inválido na coluna 'Dias preferenciais' ")
 
     # Validação do campo instrumentista
@@ -130,7 +159,7 @@ def create_people_list() -> None:
             return False
         else:
             #cria o arquivo json da lista de pessoas
-            with open('people.json','w',encoding='utf-8') as  f:
+            with open(os.path.join(pasta_arquivos, 'pessoas da escala.json'),'w',encoding='utf-8') as  f:
                 json.dump(list_dict_person, f, ensure_ascii=False, indent=4)
             return True
     
@@ -192,12 +221,53 @@ def create_list_days() -> None:
             return False
         else:
             #cria o arquivo json da lista de dias
-            with open('days.json','w',encoding='utf-8') as  f:
+            with open(os.path.join(pasta_arquivos, 'dias requeridos.json'),'w',encoding='utf-8') as  f:
                 json.dump(util_days, f, ensure_ascii=False, indent=4)
             return True
     
     except Exception as er:
         log('debug','create_list_days()',f'Erro: {er}')
+        return False
+
+def create_sonoplaste_escale():
+    global escale_sonoplaste
+    
+    try:    
+        def ordinary_position_day_on_month(weekday: int, arg_date: datetime) -> int:
+            """
+            Retorna a posição ordinal de um dia da semana no mês.
+            Exemplo: "2" significa 'segunda {data}' do mês ou 'segunda quarta-feira' do mês caso a data passada seja uma quarta feira.
+            """
+            contador = 0
+
+            for dia in range(1, arg_date.day + 1):
+                if datetime(arg_date.year, arg_date.month, dia).weekday() == weekday:
+                    contador += 1
+
+            return contador
+
+
+        # Obter os dias do mês atual (retorna uma tupla (dia da semana que o mes começa , numero de dias no mês))
+        first_weekday_month, month_days = calendar.monthrange(year_choice, month_choice)
+
+        dias = {}
+        for day in range(1,month_days + 1):
+            date = datetime(year_choice, month_choice, day)
+            weekday = date.weekday()  # 0=segunda, 1=terça, ..., 6=domingo
+            if weekday != 2 and weekday != 5 and weekday != 6: continue
+            # No dicionario dias fica o numero do dia como chave e seu valor é uma tupla (weekday, posição ordinal do dia da semana no mês) -> exemplo: [5] = (5, 1) dia 5 é o primeiro sabado
+            dias[day] = (weekday, ordinary_position_day_on_month(weekday, date))
+
+        for k, v in dias.items():
+            for date, name in escale_names.items():
+                if v == date:
+                    escale_sonoplaste[k] = name
+                    break
+
+        return True
+    
+    except Exception as er:
+        log('debug','create_sonoplaste_escale()',f'Erro: {er}')
         return False
 
 def create_table():
@@ -266,7 +336,8 @@ def create_table():
                 "month_day" : month_day,
                 "weekday" : int_day[weekday],
                 "required_people" : required_people,
-                "people" : day_people
+                "people" : day_people,
+                "sonoplaste" : escale_sonoplaste[month_day],
             })
         
         
@@ -275,7 +346,7 @@ def create_table():
             return False
         else:
             #cria o arquivo json do resultado final
-            with open('final_date.json','w',encoding='utf-8') as  f:
+            with open(os.path.join(pasta_arquivos,'resultado_escala.json'),'w',encoding='utf-8') as  f:
                 json.dump(schedule, f, ensure_ascii=False, indent=4)
             return True
     
@@ -301,7 +372,7 @@ def create_message():
         for person in sched["people"]:
             final_msg += f'{person} , ' if person != sched["people"][-1] else person
         final_msg += '\nInstrumentista(s): Sonoplastia'
-        final_msg += '\nSonoplasta(s): Gabriel e Pâmela'
+        final_msg += f'\nSonoplasta(s): {" e ".join(sched["sonoplaste"])}'
         final_msg += '\n\n'
         if sched["weekday"] == 'sabado':
             final_msg += '\n\n'
@@ -321,7 +392,7 @@ def create_html():
 
     # Dados que você deseja passar para o template
     dados = {
-        'titulo': 'Exemplo Escala',
+        'titulo': 'Exemplo De Escala',
         'nome': 'João',
         'mes': months[mes],
         'ano': ano,
@@ -335,23 +406,25 @@ def create_html():
     html_renderizado = template.render(dados)
 
     #escreve o html em um arquivo
-    with open('exemplo.html', 'w', encoding='utf-8') as f:
+    with open(os.path.join(pasta_arquivos, 'escala criada.html'), 'w', encoding='utf-8') as f:
         f.write(html_renderizado)
         
-    diretorio_script = os.path.dirname(os.path.abspath(__file__))
-    arquivo_html = os.path.join(diretorio_script,'exemplo.html')
-    subprocess.run(["start", arquivo_html], shell=True)
+    arquivo_html = os.path.join(os.path.join(pasta_arquivos,'escala criada.html'))
+    os.startfile(arquivo_html)
 
 if __name__ == '__main__':
     if create_people_list() and list_dict_person:
         create_people_func_list()
         if create_list_days() and util_days:
-            if create_table() and schedule:
-                create_message()
-                create_html()
-                print('Tabela com escala criada com sucesso!')
+            if create_sonoplaste_escale() and escale_sonoplaste:
+                if create_table() and schedule:
+                    create_message()
+                    create_html()
+                    print('Tabela com escala criada com sucesso!')
+                else:
+                    print('Erro create_table(). Checar log')
             else:
-                print('Erro create_table(). Checar log')
+                print('Erro no create_sonoplaste_escale(). Checar log')
         else:
             print('Erro no create_list_days(). Checar log')
     else:

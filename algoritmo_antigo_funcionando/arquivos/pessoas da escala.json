@@ -6,7 +6,9 @@
         "vocalist": true,
         "type_vocal": "Tenor",
         "music_message": true,
-        "except_day": [],
+        "except_day": [
+            2
+        ],
         "preference_day": [
             5
         ],
