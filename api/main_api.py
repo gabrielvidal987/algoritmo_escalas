@@ -40,11 +40,10 @@ months = {
 }
 
 '''
-formato de dados
+formato de dados para receber
 
 dados = {
     "separar_genero" : True,
-    "table" : "default",
     "days_event" : [
         {
             'month_day' : 1,
@@ -56,6 +55,17 @@ dados = {
             'weekday' : 5,
             'people_need' : 2,
         }
+    ],
+    ### para tabela normal:
+    "list_dict_person" : [
+        {
+            'name' : 'jose',
+            'gender' : 'f',
+        },
+        {
+            'name' : 'maria',
+            'gender' : 'f',
+        },
     ],
     ### para musica:
     "list_dict_person" : [
@@ -75,17 +85,6 @@ dados = {
             'music_message' : True,
             'except_day' : [],
             'preference_day' : [5],
-            'gender' : 'f',
-        },
-    ],
-    ### para tabela normal:
-    "list_dict_person" : [
-        {
-            'name' : 'jose',
-            'gender' : 'f',
-        },
-        {
-            'name' : 'maria',
             'gender' : 'f',
         },
     ],
@@ -146,6 +145,161 @@ def home():
 # Rota para gerar uma nova escala
 @app.post("/gerar_escala")
 async def gerar_escala(request: Request):
+    dados = await request.json()
+    schedule = []
+    final_msg = ''
+    #dias em que terá o evento e quantas pessoas são necessárias pro dia
+    days_event = dados["days_event"]
+    year_event = dados["year_event"]
+    month_event = dados["month_event"]
+    #lista de dicionarios sendo cada dicionario a ficha de uma pessoa
+    list_dict_person = dados["list_dict_person"]
+    
+    async def create_table():
+        nonlocal schedule, final_msg
+        '''
+        Monta a escala de acordo com as regras:
+        Alternância de Gêneros: Coloca homens e mulheres alternadamente na escala.
+        Preferências: Prioriza as pessoas que têm preferências para o dia.
+        Restrições: Verifica se a pessoa está disponível para o dia (não tem restrição).
+        Escala Completa: Preenche o número necessário de pessoas por dia, respeitando as regras de gênero, preferências e restrições.
+        Gera o arquivo JSON (final_date.json) com a tabela final de escalas.
+        '''
+        try:
+            used_people = set()  # Para rastrear pessoas já escaladas
+
+            if dados["separar_genero"]:
+                # Separando homens e mulheres
+                men = [p for p in list_dict_person if p['gender'] == 'm']
+                women = [p for p in list_dict_person if p['gender'] == 'f']
+                
+                #iterea sobre os dias uteis
+                for day in days_event:
+                    day_people = []
+                    people_need = day['people_need']
+                    month_day = day['month_day']
+                    weekday = day['weekday']
+                    
+                    # Filtra as pessoas que podem ser escaladas para esse dia
+                    available_men = [p for p in men if p['name'] not in used_people]
+                    available_women = [p for p in women if p['name'] not in used_people]
+                    
+                    # Alternar entre homem e mulher
+                    while len(day_people) < people_need:
+                        if len(day_people) % 2 == 0:  # Se a posição for par, colocar homem
+                            if available_men:
+                                person = available_men.pop(random.randint(0,len(available_men) - 1))
+                                day_people.append(person['name'])
+                                used_people.add(person['name'])
+                            else:
+                                person = random.choice(men)
+                                if weekday in person['except_day'] : continue
+                                day_people.append(person['name'])
+                                used_people.add(person['name'])
+                        else:  # Se a posição for ímpar, colocar mulher
+                            if available_women:
+                                person = available_women.pop(random.randint(0,len(available_women) - 1))
+                                day_people.append(person['name'])
+                                used_people.add(person['name'])
+                            else:
+                                person = random.choice(women)
+                                if person['except_day'] == weekday: continue
+                                day_people.append(person['name'])
+                                used_people.add(person['name'])
+                                
+                    # Atribuindo as pessoas ao dia
+                    schedule.append({
+                        "year" : day["year"],
+                        'month' : day["month"],
+                        "month_day" : month_day,
+                        "weekday" : int_day[weekday],
+                        "people_need" : people_need,
+                        "people" : day_people
+                    })
+                
+            else:
+                #iterea sobre os dias uteis
+                for day in days_event:
+                    day_people = []
+                    people_need = day['people_need']
+                    month_day = day['month_day']
+                    weekday = day['weekday']
+                    
+                    # Filtra as pessoas que podem ser escaladas para esse dia
+                    available_person = [p for p in list_dict_person if p['name'] not in used_people]
+                    
+                    # Alternar entre homem e mulher
+                    while len(day_people) < people_need:
+                        if available_person:
+                            person = available_person.pop(random.randint(0,len(available_person) - 1))
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                        else:
+                            person = random.choice(list_dict_person)
+                            day_people.append(person['name'])
+                            used_people.add(person['name'])
+                                
+                    # Atribuindo as pessoas ao dia
+                    schedule.append({
+                        "year" : day["year"],
+                        'month' : day["month"],
+                        "month_day" : month_day,
+                        "weekday" : int_day[weekday],
+                        "people_need" : people_need,
+                        "people" : day_people
+                    })
+            
+            if not schedule:
+                print('Lista de dicionarios dos dias da escala ficaram vazios!')
+                return False
+            else:
+                return True
+        
+        except Exception as er:
+            #log('debug','create_table()',f'Erro: {er}')
+            print(f'Erro: {er}')
+            return False
+     
+    async def create_html():
+        '''cria o html com jinja2'''
+
+        # Carrega o template 'index.html' que estará na pasta templates
+        nonlocal dados, schedule, final_msg
+        template = env.get_template('index.html')
+            
+        hoje = datetime.now()
+        ano = hoje.year if year_event == '' else int(year_event)
+        mes = hoje.month if month_event == '' else int(month_event)
+
+        # Dados que você deseja passar para o template
+        dados = {
+            'titulo': 'Exemplo Escala',
+            'nome': 'João',
+            'mes': months[mes],
+            'ano': ano,
+            'idade': 25,
+            'dias_uteis': schedule,
+            'msg': final_msg.replace('\n','</br>')
+        }
+
+        # Renderiza o template com os dados passados e exibe o HTML
+        html_renderizado = template.render(dados)
+
+        return html_renderizado
+    
+    print(f'criando tabela padrão')
+    await create_table()
+    if schedule:
+        print(f'criada tabela')
+        document_html = await create_html()
+        print('Tabela com escala criada com sucesso!')
+        return HTMLResponse(content=document_html, status_code=200)
+    
+    return "erro"
+
+# Rota para gerar uma nova escala
+@app.post("/gerar_escala_musica")
+async def gerar_escala_musica(request: Request):
     dados = await request.json()
     schedule = []
     final_msg = ''
@@ -299,120 +453,12 @@ async def gerar_escala(request: Request):
             print(f'Erro: {er}')
             return False
     
-    async def create_table():
-        nonlocal schedule, final_msg
-        '''
-        Monta a escala de acordo com as regras:
-        Alternância de Gêneros: Coloca homens e mulheres alternadamente na escala.
-        Preferências: Prioriza as pessoas que têm preferências para o dia.
-        Restrições: Verifica se a pessoa está disponível para o dia (não tem restrição).
-        Escala Completa: Preenche o número necessário de pessoas por dia, respeitando as regras de gênero, preferências e restrições.
-        Gera o arquivo JSON (final_date.json) com a tabela final de escalas.
-        '''
-        try:
-            used_people = set()  # Para rastrear pessoas já escaladas
-
-            if dados["separar_genero"]:
-                # Separando homens e mulheres
-                men = [p for p in list_dict_person if p['gender'] == 'm']
-                women = [p for p in list_dict_person if p['gender'] == 'f']
-                
-                #iterea sobre os dias uteis
-                for day in days_event:
-                    day_people = []
-                    people_need = day['people_need']
-                    month_day = day['month_day']
-                    weekday = day['weekday']
-                    
-                    # Filtra as pessoas que podem ser escaladas para esse dia
-                    available_men = [p for p in men if p['name'] not in used_people]
-                    available_women = [p for p in women if p['name'] not in used_people]
-                    
-                    # Alternar entre homem e mulher
-                    while len(day_people) < people_need:
-                        if len(day_people) % 2 == 0:  # Se a posição for par, colocar homem
-                            if available_men:
-                                person = available_men.pop(random.randint(0,len(available_men) - 1))
-                                day_people.append(person['name'])
-                                used_people.add(person['name'])
-                            else:
-                                person = random.choice(men)
-                                if weekday in person['except_day'] : continue
-                                day_people.append(person['name'])
-                                used_people.add(person['name'])
-                        else:  # Se a posição for ímpar, colocar mulher
-                            if available_women:
-                                person = available_women.pop(random.randint(0,len(available_women) - 1))
-                                day_people.append(person['name'])
-                                used_people.add(person['name'])
-                            else:
-                                person = random.choice(women)
-                                if person['except_day'] == weekday: continue
-                                day_people.append(person['name'])
-                                used_people.add(person['name'])
-                                
-                    # Atribuindo as pessoas ao dia
-                    schedule.append({
-                        "year" : day["year"],
-                        'month' : day["month"],
-                        "month_day" : month_day,
-                        "weekday" : int_day[weekday],
-                        "people_need" : people_need,
-                        "people" : day_people
-                    })
-                
-            else:
-                #iterea sobre os dias uteis
-                for day in days_event:
-                    day_people = []
-                    people_need = day['people_need']
-                    month_day = day['month_day']
-                    weekday = day['weekday']
-                    
-                    # Filtra as pessoas que podem ser escaladas para esse dia
-                    available_person = [p for p in list_dict_person if p['name'] not in used_people]
-                    
-                    # Alternar entre homem e mulher
-                    while len(day_people) < people_need:
-                        if available_person:
-                            person = available_person.pop(random.randint(0,len(available_person) - 1))
-                            day_people.append(person['name'])
-                            used_people.add(person['name'])
-                        else:
-                            person = random.choice(list_dict_person)
-                            day_people.append(person['name'])
-                            used_people.add(person['name'])
-                                
-                    # Atribuindo as pessoas ao dia
-                    schedule.append({
-                        "year" : day["year"],
-                        'month' : day["month"],
-                        "month_day" : month_day,
-                        "weekday" : int_day[weekday],
-                        "people_need" : people_need,
-                        "people" : day_people
-                    })
-            
-            if not schedule:
-                print('Lista de dicionarios dos dias da escala ficaram vazios!')
-                return False
-            else:
-                return True
-        
-        except Exception as er:
-            #log('debug','create_table()',f'Erro: {er}')
-            print(f'Erro: {er}')
-            return False
-     
     async def create_html():
         '''cria o html com jinja2'''
 
         # Carrega o template 'index.html' que estará na pasta templates
         nonlocal dados, schedule, funcoes, final_msg
-        if dados["table"] == "default":
-            template = env.get_template('index.html')
-        else:
-            template = env.get_template('index_music.html')
+        template = env.get_template('index_music.html')
             
         hoje = datetime.now()
         ano = hoje.year if year_event == '' else int(year_event)
@@ -435,22 +481,15 @@ async def gerar_escala(request: Request):
 
         return html_renderizado
     
-    if dados["table"] == "default":
-        print(f'criando tabela')
-        await create_table()
-        if schedule:
-            print(f'criada tabela')
-            document_html = await create_html()
-            print('Tabela com escala criada com sucesso!')
-            return HTMLResponse(content=document_html, status_code=200)
-    
-    else:
-        print(f'criando tabela de musica')
-        await create_table_music()
-        if schedule:
-            print(f'criada tabela de musica')
-            document_html = await create_html()
-            print('Tabela com escala criada com sucesso!')
-            return HTMLResponse(content=document_html, status_code=200)
+    print(f'criando tabela de musica')
+    await create_table_music()
+    if schedule:
+        print(f'criada tabela de musica')
+        document_html = await create_html()
+        print('Tabela com escala criada com sucesso!')
+        return HTMLResponse(content=document_html, status_code=200)
         
     return "erro"
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=4000)
