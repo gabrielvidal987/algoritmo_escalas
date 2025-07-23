@@ -88,6 +88,12 @@ dados = {
             'gender' : 'f',
         },
     ],
+    "escale_sonoplaste" : {
+        "dia_do_mes" : ["pessoa1", "pessoa2"],
+        "2" : ["pessoa1"],
+        "8" : ["pessoa1", "pessoa2"],
+        "15" : ["pessoa1"],
+    }
     "funcoes" : {
         "instrumentistas" : [
             {
@@ -133,7 +139,7 @@ dados = {
 
 app = FastAPI()
 # Configura o caminho para os templates (diretório 'templates')
-env = Environment(loader=FileSystemLoader('app/templates'))
+env = Environment(loader=FileSystemLoader('templates'))
 
 # Rota para listar todas as tarefas
 @app.get("/")
@@ -154,6 +160,25 @@ async def gerar_escala(request: Request):
     month_event = dados["month_event"]
     #lista de dicionarios sendo cada dicionario a ficha de uma pessoa
     list_dict_person = dados["list_dict_person"]
+    
+    async def create_message():
+        '''cria o arquivo txt no formato de mensagem'''
+    
+        nonlocal schedule, final_msg
+        '''    
+        Odd/mm - sabado
+        nome, nome, nome,
+        instrumentista: nome 
+        '''
+        
+        #cria a string da mensagem
+        hoje = datetime.now()
+        mes = hoje.month if month_event == '' else int(month_event)
+        for sched in schedule:
+            final_msg += f'🔵 {sched["month_day"]}/{mes} - {str(sched["weekday"]).upper()}\n'
+            for person in sched["people"]:
+                final_msg += f'{person} , ' if person != sched["people"][-1] else person
+            final_msg += '\n\n'
     
     async def create_table():
         nonlocal schedule, final_msg
@@ -209,8 +234,8 @@ async def gerar_escala(request: Request):
                                 
                     # Atribuindo as pessoas ao dia
                     schedule.append({
-                        "year" : day["year"],
-                        'month' : day["month"],
+                        "year" : year_event,
+                        'month' : month_event,
                         "month_day" : month_day,
                         "weekday" : int_day[weekday],
                         "people_need" : people_need,
@@ -241,8 +266,8 @@ async def gerar_escala(request: Request):
                                 
                     # Atribuindo as pessoas ao dia
                     schedule.append({
-                        "year" : day["year"],
-                        'month' : day["month"],
+                        "year" : year_event,
+                        'month' : month_event,
                         "month_day" : month_day,
                         "weekday" : int_day[weekday],
                         "people_need" : people_need,
@@ -263,20 +288,16 @@ async def gerar_escala(request: Request):
     async def create_html():
         '''cria o html com jinja2'''
 
-        # Carrega o template 'index.html' que estará na pasta templates
+        # Carrega o template 'index_default.html' que estará na pasta templates
         nonlocal dados, schedule, final_msg
-        template = env.get_template('index.html')
+        template = env.get_template('index_default.html')
             
-        hoje = datetime.now()
-        ano = hoje.year if year_event == '' else int(year_event)
-        mes = hoje.month if month_event == '' else int(month_event)
-
         # Dados que você deseja passar para o template
         dados = {
             'titulo': 'Exemplo Escala',
             'nome': 'João',
-            'mes': months[mes],
-            'ano': ano,
+            'mes': months[month_event],
+            'ano': year_event,
             'idade': 25,
             'dias_uteis': schedule,
             'msg': final_msg.replace('\n','</br>')
@@ -290,12 +311,13 @@ async def gerar_escala(request: Request):
     print(f'criando tabela padrão')
     await create_table()
     if schedule:
+        await create_message()
         print(f'criada tabela')
         document_html = await create_html()
         print('Tabela com escala criada com sucesso!')
-        return HTMLResponse(content=document_html, status_code=200)
+        return {"success": True, "html_content": document_html}
     
-    return "erro"
+    return {"success": False, "html_content": ""}
 
 # Rota para gerar uma nova escala
 @app.post("/gerar_escala_musica")
@@ -342,7 +364,7 @@ async def gerar_escala_musica(request: Request):
                 for person in sched["people"]:
                     final_msg += f'{person} , ' if person != sched["people"][-1] else person
                 final_msg += '\nInstrumentista(s): Sonoplastia'
-                final_msg += '\nSonoplasta(s): Gabriel e Pâmela'
+                final_msg += f'\nSonoplasta(s): {" e ".join(sched["sonoplaste"])}'
                 final_msg += '\n\n'
                 if sched["weekday"] == 'sabado':
                     final_msg += '\n\n'
@@ -403,10 +425,13 @@ async def gerar_escala_musica(request: Request):
                                 
                     # Atribuindo as pessoas ao dia
                     schedule.append({
+                        "year" : year_event,
+                        'month' : month_event,
                         "month_day" : month_day,
                         "weekday" : int_day[weekday],
                         "people_need" : people_need,
-                        "people" : day_people
+                        "people" : day_people,
+                        "sonoplaste" : dados["escale_sonoplaste"].get(month_day, ["Equipe de sonoplastia"]),
                     })
                 
             else:
@@ -433,12 +458,13 @@ async def gerar_escala_musica(request: Request):
                                 
                     # Atribuindo as pessoas ao dia
                     schedule.append({
-                        "year" : day["year"],
-                        'month' : day["month"],
+                        "year" : year_event,
+                        'month' : month_event,
                         "month_day" : month_day,
                         "weekday" : int_day[weekday],
                         "people_need" : people_need,
-                        "people" : day_people
+                        "people" : day_people,
+                        "sonoplaste" : dados["escale_sonoplaste"][month_day],
                     })
             
             if not schedule:
@@ -460,16 +486,12 @@ async def gerar_escala_musica(request: Request):
         nonlocal dados, schedule, funcoes, final_msg
         template = env.get_template('index_music.html')
             
-        hoje = datetime.now()
-        ano = hoje.year if year_event == '' else int(year_event)
-        mes = hoje.month if month_event == '' else int(month_event)
-
         # Dados que você deseja passar para o template
         dados = {
             'titulo': 'Exemplo Escala',
             'nome': 'João',
-            'mes': months[mes],
-            'ano': ano,
+            'mes': months[month_event],
+            'ano': year_event,
             'idade': 25,
             'dias_uteis': schedule,
             'funcoes' : funcoes,
@@ -484,12 +506,13 @@ async def gerar_escala_musica(request: Request):
     print(f'criando tabela de musica')
     await create_table_music()
     if schedule:
-        print(f'criada tabela de musica')
+        print(f'criada tabela')
         document_html = await create_html()
         print('Tabela com escala criada com sucesso!')
-        return HTMLResponse(content=document_html, status_code=200)
+        return {"success": True, "html_content": document_html}
+    
         
-    return "erro"
+    return {"success": False, "html_content": ""}
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=4000)

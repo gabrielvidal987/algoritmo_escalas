@@ -72,10 +72,12 @@
     </br>
     <div class="container">
         {% for dia in dias_uteis %}
-            </br>
             <div class="box">
                 <p>Dia: {{ dia['month_day'] }} - {{ dia['weekday'] }}</p>
-                <p>Qtd de pessoas: {{ dia['people_need'] }}</p>
+                <p>Sonoplastia: {{ " e ".join(dia['sonoplaste']) }}</p>
+                <br>
+                <p>Dirigentes:</p>
+                <p>Quantidade de pessoas: {{ dia['required_people'] }}</p>
                 {% for person in dia['people'] %}
                     <p>{{ person }}</br></p>
                 {% endfor %}
@@ -101,6 +103,5 @@
     <div class="msg">
         {{ msg }}
     </div>
-    </br>
 </body>
 </html>

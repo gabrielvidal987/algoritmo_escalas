@@ -72,7 +72,6 @@
     </br>
     <div class="container">
         {% for dia in dias_uteis %}
-            </br>
             <div class="box">
                 <p>Dia: {{ dia['month_day'] }} - {{ dia['weekday'] }}</p>
                 <p>Qtd de pessoas: {{ dia['people_need'] }}</p>
@@ -82,6 +81,8 @@
             </div>
         {% endfor %}
     </div>
-    </br>
+    <div class="msg">
+        {{ msg }}
+    </div>
 </body>
 </html>

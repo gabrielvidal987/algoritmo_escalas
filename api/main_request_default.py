@@ -3,13 +3,17 @@ import os
 import requests
 import calendar
 import pandas as pd
+import json
 from datetime import datetime
 
 url = 'http://localhost:4000/gerar_escala'
+diretorio_atual = os.path.dirname(os.path.abspath(__file__))
+nome_arq_html = 'Escala.html'
+arq_saida_html = os.path.join(diretorio_atual, nome_arq_html)
 
 '''VARIAVEIS'''
 separar_genero = None # True or False
-days_event = [{}, {}, {}] # [ { 'month_day' : 1, 'weekday' : 5, 'people_need' : 2 } , { 'month_day' : 7, 'weekday' : 3, 'people_need' : 4 } ]
+days_event = [] # [ { 'month_day' : 1, 'weekday' : 5, 'people_need' : 2 } , { 'month_day' : 7, 'weekday' : 3, 'people_need' : 4 } ]
 list_dict_person = [] #[ { 'name' : 'jose', 'gender' : 'm' } , { 'name' : 'maria', 'gender' : 'f' } ]
 year_choice = None # 2025 / 25
 month_choice = None # 1 - 12
@@ -20,7 +24,6 @@ qtd_quarta = None
 qtd_quinta = None
 qtd_sexta = None
 qtd_sabado = None
-diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 
 def preenche_variaveis():
     '''Realiza os input para poder preencher as variaveis'''
@@ -144,28 +147,51 @@ def preenche_dict_person():
         list_dict_person.append(row)
 
 
-preenche_variaveis()
-preenche_datas()
-preenche_dict_person()
+def hello():
+    print('-'*40)
+    print('EXECUTANDO ALGORITMO DE CRIAÇÃO DE ESCALA PADRÃO')
+    print('-'*40)
 
 
-if not any([separar_genero, days_event, list_dict_person]):
-    print(f'Variavel separar_genero:\n {separar_genero}')
-    print(f'Variavel days_event:\n {days_event}')
-    print(f'Variavel list_dict_person:\n {list_dict_person}')
+def msg_final():
+    print('-'*40)
+    print('ESCALA FINALIZADA')
+    print(f'VERIFIQUE ELA NA MESMA PASTA DO PROGRAMA ABRINDO O ARQUIVO: "{nome_arq_html}" ')
+    print('-'*40)
     
-    raise Exception(f'Erro em alguma variavel')
+    
+if __name__ == '__main__':
+    hello()
+    
+    preenche_variaveis()
+    preenche_datas()
+    preenche_dict_person()
 
 
-dados = {
-    "separar_genero" : separar_genero,
-    "days_event" : days_event,
-    "year_event" : year_choice,
-    "month_event" : month_choice,
-    "list_dict_person" : list_dict_person
-}
+    if not any([separar_genero, days_event, list_dict_person]):
+        print(f'Variavel separar_genero:\n {separar_genero}')
+        print(f'Variavel days_event:\n {days_event}')
+        print(f'Variavel list_dict_person:\n {list_dict_person}')
+        
+        raise Exception(f'Erro em alguma variavel')
 
-response = requests.post(url, json=dados, verify=False, proxies={"http": None, "https": None})
 
-print("Status:", response.status_code)
-print("Resposta:", response.text)
+    dados = {
+        "separar_genero" : separar_genero,
+        "days_event" : days_event,
+        "year_event" : year_choice,
+        "month_event" : month_choice,
+        "list_dict_person" : list_dict_person
+    }
+
+    response = requests.post(url, json=dados, verify=False, proxies={"http": None, "https": None})
+
+    response_json = json.loads(response.text)
+    if response_json["success"]:
+        doc_html = response_json["html_content"]
+        with open(arq_saida_html, 'w', encoding="utf-8") as f:
+            f.write(doc_html)
+        
+        msg_final()
+    else:
+        print(f'Sem resultados: {response_json}')

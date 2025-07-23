@@ -1,0 +1,16 @@
+# __pycache__ e arquivos temporários
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Ambiente virtual
+venv/
+env/
+
+# Configurações de IDEs
+.vscode/
+.idea/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
