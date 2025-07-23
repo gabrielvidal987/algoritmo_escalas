@@ -514,5 +514,5 @@ async def gerar_escala_musica(request: Request):
         
     return {"success": False, "html_content": ""}
 
-if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=4000)
+# if __name__ == '__main__':
+#     uvicorn.run(app, host="0.0.0.0", port=4000)

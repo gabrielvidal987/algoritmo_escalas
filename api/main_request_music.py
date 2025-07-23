@@ -6,7 +6,7 @@ import requests
 import os, re
 from datetime import datetime
 
-url = 'http://localhost:4000/gerar_escala_musica'
+url = 'https://algoritmo-escalas.onrender.com/gerar_escala_musica'
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 nome_arq_html = 'Escala Musica.html'
 arq_saida_html = os.path.join(diretorio_atual, nome_arq_html)

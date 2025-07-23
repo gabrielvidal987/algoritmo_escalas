@@ -6,7 +6,7 @@ import pandas as pd
 import json
 from datetime import datetime
 
-url = 'http://localhost:4000/gerar_escala'
+url = 'https://algoritmo-escalas.onrender.com/gerar_escala'
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
 nome_arq_html = 'Escala.html'
 arq_saida_html = os.path.join(diretorio_atual, nome_arq_html)
