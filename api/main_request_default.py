@@ -184,7 +184,7 @@ if __name__ == '__main__':
         "list_dict_person" : list_dict_person
     }
 
-    response = requests.post(url, json=dados, verify=False, proxies={"http": None, "https": None})
+    response = requests.post(url, json=dados, verify=False)
 
     response_json = json.loads(response.text)
     if response_json["success"]:
