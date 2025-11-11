@@ -1,399 +1,399 @@
 [
-    {
-        "Nome": "Pamela Souza",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [
-            "sabado"
-        ],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Mondek",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [
-            "sabado",
-            "domingo"
-        ],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Gabriel Vidal",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": false
-    },
-    {
-        "Nome": "Davi Batista",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Vitor Ribeiro",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Marcos chaves",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Mariana nascimento",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Eric",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [
-            "domingo"
-        ],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Michele",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Matheus nascimento",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": false
-    },
-    {
-        "Nome": "Pedro braz",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Istanley",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [
-            "sabado"
-        ],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Rodrigo",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [
-            "sabado"
-        ],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Sarah",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [
-            "sabado"
-        ],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Samara",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": false
-    },
-    {
-        "Nome": "Geni",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Alan",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Jos\u00e9",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": false
-    },
-    {
-        "Nome": "Flavinha",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [
-            "quarta",
-            "domingo"
-        ],
-        "Dias preferenciais": [
-            "sabado"
-        ],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Pamela",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": true,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Bia aventureiros",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": false
-    },
-    {
-        "Nome": "Bia Felix",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Elza",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Ivni",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta",
-            "domingo"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": false
-    },
-    {
-        "Nome": "Jussara",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Lucas",
-        "Instrumentista": true,
-        "Instrumento": "nenhum",
-        "Vocalista": false,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Mateus araujo",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "m",
-        "Atuando": true
-    },
-    {
-        "Nome": "Aureni",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "s\u00e1bado"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": true
-    },
-    {
-        "Nome": "Edvania",
-        "Instrumentista": false,
-        "Instrumento": "nenhum",
-        "Vocalista": true,
-        "Tipo Vocal": "desconhecido",
-        "Faz mensagem musical": false,
-        "Dias n\u00e3o preferenciais": [
-            "quarta"
-        ],
-        "Dias preferenciais": [],
-        "Genero": "f",
-        "Atuando": false
-    }
+  {
+    "Nome": "Pamela Souza",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [
+      "Sabado"
+    ],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Mondek",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [
+      "Sabado",
+      "Domingo"
+    ],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Gabriel Vidal",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": false
+  },
+  {
+    "Nome": "Davi Batista",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Vitor Ribeiro",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Marcos chaves",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Mariana nascimento",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Eric",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [
+      "Domingo"
+    ],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Michele",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Matheus nascimento",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": false
+  },
+  {
+    "Nome": "Pedro braz",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Istanley",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [
+      "Sabado"
+    ],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Rodrigo",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [
+      "Sabado"
+    ],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Sarah",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [
+      "Sabado"
+    ],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Samara",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": false
+  },
+  {
+    "Nome": "Geni",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Alan",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "José",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": false
+  },
+  {
+    "Nome": "Flavinha",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [
+      "Quarta",
+      "Domingo"
+    ],
+    "Dias preferenciais": [
+      "Sabado"
+    ],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Pamela",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": true,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Bia aventureiros",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": false
+  },
+  {
+    "Nome": "Bia Felix",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Elza",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Ivni",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta",
+      "Domingo"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": false
+  },
+  {
+    "Nome": "Jussara",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Lucas",
+    "Instrumentista": true,
+    "Instrumento": "nenhum",
+    "Vocalista": false,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Mateus araujo",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "m",
+    "Atuando": true
+  },
+  {
+    "Nome": "Aureni",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Sábado"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": true
+  },
+  {
+    "Nome": "Edvania",
+    "Instrumentista": false,
+    "Instrumento": "nenhum",
+    "Vocalista": true,
+    "Tipo Vocal": "desconhecido",
+    "Faz mensagem musical": false,
+    "Dias não preferenciais": [
+      "Quarta"
+    ],
+    "Dias preferenciais": [],
+    "Genero": "f",
+    "Atuando": false
+  }
 ]

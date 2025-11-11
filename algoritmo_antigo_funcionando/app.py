@@ -232,7 +232,7 @@ def create_list_days() -> None:
 def create_sonoplaste_escale():
     global escale_sonoplaste
     
-    try:    
+    try:
         def ordinary_position_day_on_month(weekday: int, arg_date: datetime) -> int:
             """
             Retorna a posição ordinal de um dia da semana no mês.

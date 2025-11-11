@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner";
-import { RefreshCcw, Copy, Save } from 'lucide-react';
+import { RefreshCcw, Copy, Save, X, Trash2  } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -30,7 +30,7 @@ interface TableDataMusic {
   Atuando: boolean;
 }
 
-const url_api = "http://10.0.0.20:4000"
+const url_api = "http://10.0.0.20:4000";
 
 const Index = () => {
   const [formData, setFormData] = useState({
@@ -47,10 +47,16 @@ const Index = () => {
   });
   const [formNewEscale, setFormNewEscale] = useState({
     Nome: "",
-    Mes: "",
-    Ano: "",
+    Mes: 0,
+    Ano: 0,
     SepararGenero: false,
-    Dias: [],
+    Domingo : 0,
+    Segunda : 0,
+    Terca : 0,
+    Quarta : 0,
+    Quinta : 0,
+    Sexta : 0,
+    Sabado : 0,
   });
   const [tableUsers, setTableUsers] = useState<TableDataMusic[]>([])
   const [listaEscalas, setListaEscalas] = useState([])
@@ -84,6 +90,28 @@ const Index = () => {
     .then(data => {
       // console.log(data["lista_user_music"])
       setTableUsers(data["lista_user_music"])
+    })
+    .catch(error => {
+      console.error('Ocorreu um erro:', error);
+    });
+  }
+
+
+  const deleteEscale = async(data) => {
+    fetch(`${url_api}/deletar_escala?nome_arq=${data}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro na requisição: ' + response.status);
+      }
+      return response.json(); // converte a resposta para JSON
+    })
+    .then(data => {
+      if(!data["existe"]) {
+        toast.success(`Escala deletada com sucesso`);
+        window.location.href = ''
+      } else {
+        toast.info(`Escala deletada sem sucesso`);
+      }
     })
     .catch(error => {
       console.error('Ocorreu um erro:', error);
@@ -233,54 +261,57 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="h-[300px] w-full rounded-md border border-border">
-              <Table>
-                <TableHeader className="sticky top-0 bg-table-header z-10">
-                  <TableRow>
-                    <TableHead className="w-[50px]">Atuando</TableHead>
-                    <TableHead className="text-center">Nome</TableHead>
-                    <TableHead className="text-center">Vocalista</TableHead>
-                    <TableHead className="text-center">Tipo Vocal</TableHead>
-                    <TableHead className="text-center">Instrumentista</TableHead>
-                    <TableHead className="text-center">Instrumento</TableHead>
-                    <TableHead className="text-center">Faz Mensagem Musical</TableHead>
-                    <TableHead className="text-center">Dias Não Preferenciais</TableHead>
-                    <TableHead className="text-center">Dias Preferenciais</TableHead>
-                    <TableHead className="text-center">Genero</TableHead>
-                  </TableRow>
-                </TableHeader>
-                {tableUsers && tableUsers.length > 0 ? (
-                  <TableBody>
-                    {tableUsers.map((item, index) => (
-                      <TableRow key={index} className="hover:bg-table-row-hover transition-colors">
-                        <TableCell className="font-medium text-center">{item.Atuando ? "Sim" : "Não"}</TableCell>
-                        <TableCell className="text-center">{item.Nome}</TableCell>
-                        <TableCell className="text-center">{item.Vocalista ? "Sim" : "Não"}</TableCell>
-                        <TableCell className="text-center">{item["Tipo Vocal"]}</TableCell>
-                        <TableCell className="text-center">{item.Instrumentista ? "Sim" : "Não"}</TableCell>
-                        <TableCell className="text-center">{item.Instrumento}</TableCell>
-                        <TableCell className="text-center">{item["Faz mensagem musical"] ? "Sim" : "Não"}</TableCell>
-                        <TableCell className="text-center">{item["Dias não preferenciais"].join(", ")}</TableCell>
-                        <TableCell className="text-center">{item["Dias preferenciais"].join(", ")}</TableCell>
-                        <TableCell className="text-center">{item.Genero}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                  ) : (
-                  <TableBody>
+            <div className="overflow-x-auto w-full rounded-md border border-border">
+              <ScrollArea className="h-[300px] min-w-[500px]">
+                <Table className="">
+                  <TableHeader className="sticky top-0 bg-table-header z-10">
                     <TableRow>
-                      <TableCell colSpan={10} className="text-center text-gray-500 py-4">
-                        Nenhum registro encontrado
-                      </TableCell>
+                      <TableHead className="w-[50px]">Atuando</TableHead>
+                      <TableHead className="text-center">Nome</TableHead>
+                      <TableHead className="text-center">Vocalista</TableHead>
+                      <TableHead className="text-center">Tipo Vocal</TableHead>
+                      <TableHead className="text-center">Instrumentista</TableHead>
+                      <TableHead className="text-center">Instrumento</TableHead>
+                      <TableHead className="text-center">Faz Mensagem Musical</TableHead>
+                      <TableHead className="text-center">Dias Não Preferenciais</TableHead>
+                      <TableHead className="text-center">Dias Preferenciais</TableHead>
+                      <TableHead className="text-center">Genero</TableHead>
                     </TableRow>
-                  </TableBody>
-                  )
-                }
-              </Table>
-            </ScrollArea>
+                  </TableHeader>
+                  {tableUsers && tableUsers.length > 0 ? (
+                    <TableBody>
+                      {tableUsers.map((item, index) => (
+                        <TableRow key={index} className="hover:bg-table-row-hover transition-colors">
+                          <TableCell className="font-medium text-center">{item.Atuando ? "Sim" : "Não"}</TableCell>
+                          <TableCell className="text-center">{item.Nome}</TableCell>
+                          <TableCell className="text-center">{item.Vocalista ? "Sim" : "Não"}</TableCell>
+                          <TableCell className="text-center">{item["Tipo Vocal"]}</TableCell>
+                          <TableCell className="text-center">{item.Instrumentista ? "Sim" : "Não"}</TableCell>
+                          <TableCell className="text-center">{item.Instrumento}</TableCell>
+                          <TableCell className="text-center">{item["Faz mensagem musical"] ? "Sim" : "Não"}</TableCell>
+                          <TableCell className="text-center">{item["Dias não preferenciais"].join(", ")}</TableCell>
+                          <TableCell className="text-center">{item["Dias preferenciais"].join(", ")}</TableCell>
+                          <TableCell className="text-center">{item.Genero}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                    ) : (
+                    <TableBody>
+                      <TableRow>
+                        <TableCell colSpan={10} className="text-center text-gray-500 py-4">
+                          Nenhum registro encontrado
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                    )
+                  }
+                </Table>
+              </ScrollArea>
+            </div>
           </CardContent>
         </Card>
 
+        {/* Area do meio com lista e novo user */}
         <div className="grid md:grid-cols-2 gap-6">
           {/* Área de Botões */}
           <Card>
@@ -288,7 +319,7 @@ const Index = () => {
               <CardTitle className="text-center">Escalas geradas</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center justify-center gap-4 m-5 max-h-[600px] overflow-y-auto p-5">
                 {escalaView != '' && (
                   <div className="flex flex-col">
                     <div className="flex justify-between m-5">
@@ -298,13 +329,16 @@ const Index = () => {
                       <button className="" onClick={() => {salvar_mensagem()}}>
                         <Save/>
                       </button>
+                      <button className="" onClick={() => {setEscalaView('')}}>
+                        <X/>
+                      </button>
                     </div>
 
                     <p></p>
                     <textarea
                       id="Escala view"
                       value={escalaView}
-                      className="w-[400px] h-[300px] p-2 border rounded overflow-auto"
+                      className="w-[400px] h-[450px] p-2 border rounded overflow-auto text-center"
                       onChange={(e) => {setEscalaView(e.target.value)}}
                     />
 
@@ -312,9 +346,16 @@ const Index = () => {
                 )}
                 {escalaView == '' && listaEscalas.length > 0 && (
                   listaEscalas.map((data, index) => (
-                    <div key={index}>
-                      <button onClick={() => {setSelectedFile(data) ; pega_mensagem_escala(data)}}>
+                    <div className="m-2">
+                      <button
+                        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition"
+                        onClick={() => {setSelectedFile(data) ; pega_mensagem_escala(data)}}>
                         {data.replace('.json','')}
+                      </button>
+                      <button 
+                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full shadow-md transition"
+                        onClick={() => {deleteEscale(data)}}>
+                        <Trash2/>
                       </button>
                     </div>
                   ))
@@ -540,7 +581,7 @@ const Index = () => {
                   id="Mes escala"
                   placeholder="12"
                   className="max-w-[100px] mb-5"
-                  onChange={(e) => setFormNewEscale({ ...formNewEscale, Mes: e.target.value })}
+                  onChange={(e) => setFormNewEscale({ ...formNewEscale, Mes: Number(e.target.value) })}
                   required
                 />
                 <Label htmlFor="Ano escala">Ano da escala</Label>
@@ -548,57 +589,89 @@ const Index = () => {
                   id="Ano escala"
                   placeholder="2025"
                   className="max-w-[100px]"
-                  onChange={(e) => setFormNewEscale({ ...formNewEscale, Ano: e.target.value })}
+                  onChange={(e) => setFormNewEscale({ ...formNewEscale, Ano: Number(e.target.value) })}
                   required
                 />
               </div>
                 
-              <div className="flex justify-center mt-10 gap-10">
-                <div>
-                  <p className="mb-2"><Label className="">Dias da escala</Label></p>
-                  <Checkbox
-                    id="Segunda"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "segunda", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
+              <div className="flex justify-center gap-10">
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Domingo</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Domingo: Number(e.target.value) })}
+                    required
                   />
-                  <Label htmlFor="Segunda" className="m-1">Segunda</Label>
-                  <Checkbox
-                    id="Terça"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "terca", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Terça" className="m-1">Terça</Label>
-                  <Checkbox
-                    id="Quarta"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "quarta", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Quarta" className="m-1">Quarta</Label>
-                  <Checkbox
-                    id="Quinta"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "quinta", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Quinta" className="m-1">Quinta</Label>
-                  <Checkbox
-                    id="Sexta"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "sexta", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Sexta" className="m-1">Sexta</Label>
-                  <Checkbox
-                    id="Sábado"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "sabado", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Sábado" className="m-1">Sábado</Label>
-                  <Checkbox
-                    id="Domingo"
-                    onCheckedChange={(e) => {marca_dia("Dias", Boolean(e), "domingo", setFormNewEscale, formNewEscale)}}
-                    className="m-1"
-                  />
-                  <Label htmlFor="Domingo" className="m-1">Domingo</Label>
                 </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Segunda-feira</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Segunda: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Terça-feira</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Terca: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Quarta-feira</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Quarta: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Quinta-feira</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Quinta: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Sexta-feira</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Sexta: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
+                <div className="flex-col justify-center">
+                  <Label htmlFor="Mes escala">Sábado</Label>
+                  <Input
+                    id="Mes escala"
+                    placeholder="0"
+                    className="max-w-[80px]"
+                    onChange={(e) => setFormNewEscale({ ...formNewEscale, Sabado: Number(e.target.value) })}
+                    required
+                  />
+                </div>
+
               </div>
 
               <div className="flex justify-center mt-10 gap-10">
